@@ -1,0 +1,12 @@
+<jnt = 'http://www.jahia.org/jahia/nt/1.0'>
+<jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+
+[jmix:releaseItem] mixin
+ extends = jnt:content, jnt:page
+ itemtype = options
+ - release (weakreference) multiple indexed=no < jnt:release
+
+[jnt:release]
+- name (string) indexed=no
+- description (string) indexed=no
+- deadline (date)
