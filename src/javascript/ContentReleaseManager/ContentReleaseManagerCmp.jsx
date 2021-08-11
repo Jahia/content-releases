@@ -1,7 +1,9 @@
 import React from 'react';
 // Import {ContentLayout} from '@jahia/moonstone-alpha';
-import {Header} from '@jahia/moonstone/dist/components/Header';
-import {useTranslation} from 'react-i18next';
+
+import Header from './Header';
+import Content from './Content';
+
 // Import AjvError from './components/Error/Ajv';
 // import {WidenPicker} from './components/WidenPicker';
 // import {Store} from './Store';
@@ -10,25 +12,18 @@ import {useTranslation} from 'react-i18next';
 
 const ContentReleaseManagerCmp = props => {
     console.log('ContentReleaseManagerCmp props:', props);
-    const {t} = useTranslation('content-releases');
-
-    // Const getContent = () => {
-    //     return (
-    //         <div style={{padding: 'var(--spacing-medium)'}}>
-    //             Super cool ce truc
-    //         </div>
-    //     );
-    // };
-
     return (
         <>
-            <Header title={t('label.settings.title')}/>
-
-            <div style={{padding: 'var(--spacing-medium)'}}>
-                Super cool ce truc
-            </div>
+            <Header/>
+            <Content/>
         </>
     );
+
+    // Return (
+    //     <ContentLayout
+    //         header={<Header title={t('label.settings.title')}/>}
+    //         content={<div style={{padding: 'var(--spacing-medium)'}}>Super cool ce truc</div>}/>
+    // );
 };
 
 // Const ContentReleaseManagerCmp = ({field, id, value, editorContext, setActionContext, onChange}) => {
