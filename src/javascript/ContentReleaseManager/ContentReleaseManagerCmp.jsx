@@ -1,22 +1,37 @@
 import React from 'react';
 // Import {ContentLayout} from '@jahia/moonstone-alpha';
-
 import Header from './Header';
 import Content from './Content';
+import {withStyles} from '@material-ui/core';
+import PropTypes from 'prop-types';
+import classnames from 'clsx';
 
 // Import AjvError from './components/Error/Ajv';
 // import {WidenPicker} from './components/WidenPicker';
 // import {Store} from './Store';
 // import * as PropTypes from 'prop-types';
 // import {contextValidator} from './douane';
+const styles = () => ({
+    root: {
+        flex: '1 1 0',
+        width: '100%',
+        minHeight: 0,
+        backgroundColor: 'var(--color-gray_light)'
+    }
+});
 
 const ContentReleaseManagerCmp = props => {
+    const {classes} = props;
     console.log('ContentReleaseManagerCmp props:', props);
     return (
-        <>
+        <main className={classnames(
+            classes.root,
+            'flexCol'
+        )}
+        >
             <Header/>
             <Content/>
-        </>
+        </main>
     );
 
     // Return (
@@ -75,6 +90,7 @@ const ContentReleaseManagerCmp = props => {
 // };
 
 ContentReleaseManagerCmp.propTypes = {
+    classes: PropTypes.object.isRequired
     // Field: PropTypes.object,
     // id: PropTypes.string.isRequired,
     // value: PropTypes.string,
@@ -84,4 +100,4 @@ ContentReleaseManagerCmp.propTypes = {
 };
 
 ContentReleaseManagerCmp.displayName = 'ContentReleaseManager';
-export default ContentReleaseManagerCmp;
+export default withStyles(styles)(ContentReleaseManagerCmp);

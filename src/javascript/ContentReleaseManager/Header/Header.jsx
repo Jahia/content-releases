@@ -19,7 +19,7 @@ const HeaderCmp = props => {
     return (
 
         <Header
-            title={t('label.settings.title')}
+            title={t('label.layout.header.title')}
             mainActions={[
                 <Button key="b1"
                         icon={<HelpOutline fontSize="large"/>}
@@ -29,7 +29,7 @@ const HeaderCmp = props => {
                         onClick={handleHelp}/>,
                 <Button key="b2"
                         color="accent"
-                        label="Primary"
+                        label={t('label.layout.header.btn.create')}
                         size="big"
                         icon={<Add/>}
                         onClick={handleCreate}/>

@@ -1,7 +1,21 @@
 {
   "label": {
-    "settings": {
-      "title": "Content Release Manager setting"
+    "layout": {
+      "header": {
+        "title": "Content Release",
+        "btn": {
+          "create": "Add release"
+        }
+      },
+      "content": {
+        "table": {
+          "header": {
+            "name": "Release name",
+            "items": "Number of items",
+            "actions": "Actions"
+          }
+        }
+      }
     },
     "action": {
       "title": "Content Release Manager - How to extend the ui ?"
