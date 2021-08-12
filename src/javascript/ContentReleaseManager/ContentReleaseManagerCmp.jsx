@@ -32,6 +32,7 @@ const ContentReleaseManagerCmp = props => {
             <Header/>
             <Content/>
         </main>
+
     );
 
     // Return (
