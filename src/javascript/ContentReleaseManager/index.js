@@ -1,3 +1,13 @@
+import React from 'react';
 import ContentReleaseManagerCmp from './ContentReleaseManagerCmp';
+import {Store} from './store';
 
-export default ContentReleaseManagerCmp;
+const App = () => {
+    return (
+        <Store>
+            <ContentReleaseManagerCmp/>
+        </Store>
+    );
+};
+
+export default App;

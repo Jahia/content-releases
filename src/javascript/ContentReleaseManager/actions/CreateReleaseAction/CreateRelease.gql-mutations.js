@@ -1,16 +1,19 @@
-import gql from 'graphql-tag';
+import {gql} from 'apollo-boost';
 
-const CreateFolderMutation = gql`
-    mutation CreateFolderMutation($parentPath: String!, $folderName: String!, $primaryNodeType: String!) {
+const CreateReleaseMutation = gql`
+    mutation CreateReleaseMutation($parentPath: String!, $releaseName: String!, $primaryNodeType: String!) {
         jcr {
-            addNode(parentPathOrId: $parentPath, name: $folderName, primaryNodeType: $primaryNodeType) {
+            addNode(parentPathOrId: $parentPath, name: $releaseName, primaryNodeType: $primaryNodeType) {
                 node {
                     name
                     path
+                    name: property(name:"name"){
+                        value:name
+                    }
                 }
             }
         }
     }
 `;
 
-export {CreateFolderMutation};
+export {CreateReleaseMutation};

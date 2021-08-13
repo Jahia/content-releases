@@ -1,16 +1,16 @@
 import React from 'react';
 // Import {ContentLayout} from '@jahia/moonstone-alpha';
-import Header from './Header';
-import Content from './Content';
+import Header from './components/Header';
+import Content from './components/Content';
 import {withStyles} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import classnames from 'clsx';
+import get from 'lodash.get';
+import {StoreContext} from './contexts';
+import {useQuery} from '@apollo/react-hooks';
+import {GET_RELEASES} from './Releases.gql-queries';
+import CreateReleaseDialogContainer from './actions/CreateReleaseAction/CreateReleaseDialog.container';
 
-// Import AjvError from './components/Error/Ajv';
-// import {WidenPicker} from './components/WidenPicker';
-// import {Store} from './Store';
-// import * as PropTypes from 'prop-types';
-// import {contextValidator} from './douane';
 const styles = () => ({
     root: {
         flex: '1 1 0',
@@ -19,10 +19,44 @@ const styles = () => ({
         backgroundColor: 'var(--color-gray_light)'
     }
 });
-
+const contentType = 'jnt:release';
 const ContentReleaseManagerCmp = props => {
-    const {classes} = props;
     console.log('ContentReleaseManagerCmp props:', props);
+    const {classes} = props;
+    const {dispatch} = React.useContext(StoreContext);
+
+    const gqlParams = {
+        workspace: 'EDIT',
+        path: `/sites/${window.contextJsParameters.siteKey}/releases-manager/releases`
+    };
+    const {loading, error, data} = useQuery(GET_RELEASES, {
+        variables: gqlParams
+    });
+
+    React.useEffect(() => {
+        console.debug('App RELEASE MANAGER init !');
+        if (loading === false && data) {
+            console.debug('App RELEASE MANAGER init Set Data!');
+
+            const releasesData = get(data, 'response.releases', {});
+
+            dispatch({
+                case: 'DATA_READY',
+                payload: {
+                    releasesData
+                }
+            });
+        }
+    }, [loading, data, dispatch]);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error :(</p>;
+    }
+
     return (
         <main className={classnames(
             classes.root,
@@ -31,6 +65,10 @@ const ContentReleaseManagerCmp = props => {
         >
             <Header/>
             <Content/>
+            <CreateReleaseDialogContainer
+                path={gqlParams.path}
+                contentType={contentType}
+            />
         </main>
 
     );
@@ -42,62 +80,8 @@ const ContentReleaseManagerCmp = props => {
     // );
 };
 
-// Const ContentReleaseManagerCmp = ({field, id, value, editorContext, setActionContext, onChange}) => {
-//     // Console.debug('[ContentReleaseManagerCmp] field',field);
-//     // console.debug('[ContentReleaseManagerCmp] id',id);
-//     // console.debug('[ContentReleaseManagerCmp] value',value);
-//     // console.debug('[ContentReleaseManagerCmp] editorContext',editorContext);
-//
-//     let context = {
-//         widen: {
-//             url: window.contextJsParameters.config.widen.url,
-//             version: window.contextJsParameters.config.widen.version,
-//             site: window.contextJsParameters.config.widen.site,
-//             token: window.contextJsParameters.config.widen.token,
-//             mountPoint: window.contextJsParameters.config.widen.mountPoint,
-//             lazyLoad: window.contextJsParameters.config.widen.lazyLoad,
-//             resultPerPage: window.contextJsParameters.config.widen.resultPerPage
-//         },
-//         editor: {
-//             onChange,
-//             field,
-//             value,
-//             editorContext,
-//             setActionContext
-//         }
-//     };
-//
-//     try {
-//         context = contextValidator(context);
-//
-//         return (
-//             <Store context={context}>
-//                 <WidenPicker
-//                     id={id}
-//                     initEditorValue={context.editor.value}
-//                 />
-//             </Store>
-//         );
-//     } catch (e) {
-//         console.error('error : ', e);
-//         // Note: create a generic error handler
-//         return (
-//             <AjvError
-//                 item={e.message}
-//                 errors={e.errors}
-//             />
-//         );
-//     }
-// };
-
 ContentReleaseManagerCmp.propTypes = {
     classes: PropTypes.object.isRequired
-    // Field: PropTypes.object,
-    // id: PropTypes.string.isRequired,
-    // value: PropTypes.string,
-    // editorContext: PropTypes.object.isRequired,
-    // onChange: PropTypes.func.isRequired,
-    // setActionContext: PropTypes.func.isRequired
 };
 
 ContentReleaseManagerCmp.displayName = 'ContentReleaseManager';

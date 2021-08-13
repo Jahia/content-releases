@@ -8,5 +8,3 @@
 
 [jnt:release] > jnt:content, jmix:editorialContent, jmix:visibleInContentTree, jmix:droppableContent
 - name (string) indexed=no
-- description (string) indexed=no
-- deadline (date)

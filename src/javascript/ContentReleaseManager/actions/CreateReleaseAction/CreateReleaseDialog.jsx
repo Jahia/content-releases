@@ -10,7 +10,7 @@ import {
     withStyles
 } from '@material-ui/core';
 import {Button} from '@jahia/moonstone';
-import {compose} from '~/utils';
+import {compose} from '../../utils';
 import {withTranslation} from 'react-i18next';
 
 let styles = theme => ({
@@ -22,7 +22,7 @@ let styles = theme => ({
     }
 });
 
-const CreateFolderDialog = ({classes, t, open, loading, name, isNameValid, isNameAvailable, handleCancel, handleCreate, onChangeName}) => {
+const CreateFolderDialog = ({classes, t, open, name, isNameValid, isNameAvailable, handleCancel, handleCreate, onChangeName}) => {
     return (
         <Dialog open={open}
                 aria-labelledby="form-dialog-title"
@@ -57,7 +57,7 @@ const CreateFolderDialog = ({classes, t, open, loading, name, isNameValid, isNam
                     color="accent"
                     size="big"
                     data-cm-role="create-folder-as-confirm"
-                    isDisabled={loading || !name || !isNameValid || !isNameAvailable}
+                    isDisabled={!name || !isNameValid || !isNameAvailable}
                     label={t('jcontent:label.contentManager.createFolderAction.ok')}
                     onClick={handleCreate}
                 />
@@ -71,8 +71,7 @@ CreateFolderDialog.propTypes = {
     classes: PropTypes.object.isRequired,
     handleCancel: PropTypes.func.isRequired,
     handleCreate: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired,
+    open: PropTypes.func.isRequired,
     isNameValid: PropTypes.bool.isRequired,
     isNameAvailable: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,

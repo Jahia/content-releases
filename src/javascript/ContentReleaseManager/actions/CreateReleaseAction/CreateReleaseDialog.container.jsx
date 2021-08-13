@@ -1,81 +1,85 @@
-import React, {useEffect, useState} from 'react';
-import {CreateFolderQuery} from './CreateFolderDialog.gql-queries';
-import {CreateFolderMutation} from './CreateFolderDialog.gql-mutations';
+import React, {useState} from 'react';
+// Import {CreateFolderQuery} from './CreateReleaseDialog.gql-queries';
+import {CreateReleaseMutation} from './CreateRelease.gql-mutations';
 import PropTypes from 'prop-types';
-import CreateFolderDialog from './CreateFolderDialog';
-import {triggerRefetchAll} from '../../../JContent.refetches';
-import {useApolloClient, useQuery, useMutation} from '@apollo/react-hooks';
+import CreateReleaseDialog from './CreateReleaseDialog';
+// Import {triggerRefetchAll} from '../../../JContent.refetches';
+import {useApolloClient, useMutation} from '@apollo/react-hooks';
+import {StoreContext} from '../../contexts';
 
-const CreateFolderDialogContainer = ({path, contentType, onExit}) => {
-    const [open, updateIsDialogOpen] = useState(true);
+const CreateReleaseDialogContainer = ({path, contentType}) => {
+    const {state, dispatch} = React.useContext(StoreContext);
+    const {
+        showDialogCreateRelease,
+        releases
+    } = state;
+
+    // Const [open, updateIsDialogOpen] = useState(true);
     const [name, updateName] = useState('');
     const [isNameValid, updateIsNameValid] = useState(true);
     const [isNameAvailable, updateIsNameAvailable] = useState(true);
-    const [childNodes, updateChildNodes] = useState([]);
 
     const invalidRegex = /[\\/:*?"<>|]/g;
     const gqlParams = {
         mutation: {
             parentPath: path,
             primaryNodeType: contentType
-        },
-        query: {
-            path: path
         }
     };
 
     const onChangeName = e => {
         // Handle validation for name change
         updateIsNameValid(e.target.value && e.target.value.match(invalidRegex) === null);
-        updateIsNameAvailable(childNodes.find(node => node.name === e.target.value) === undefined);
+        updateIsNameAvailable(releases.find(release => release.name === e.target.value) === undefined);
         updateName(e.target.value);
     };
 
-    const handleCancel = () => {
-        // Close dialog
-        updateIsDialogOpen(false);
-        onExit();
-    };
+    const handleCancel = () =>
+        dispatch({
+            case: 'TOGGLE_SHOW_DIALOG_CREATE'
+        });
 
     const handleCreate = mutation => {
         // Do mutation to create folder.
-        gqlParams.mutation.folderName = name;
+        gqlParams.mutation.releaseName = name;
         mutation({variables: gqlParams.mutation});
-        updateIsDialogOpen(false);
-        onExit();
+        // TODO voir ce que la mutation retourne, update de la liste des release?
+        dispatch({
+            case: 'TOGGLE_SHOW_DIALOG_CREATE'
+        });
+        // UpdateIsDialogOpen(false);
+        // onExit();
     };
 
     const client = useApolloClient();
-    const {loading, data} = useQuery(CreateFolderQuery, {variables: gqlParams.query, fetchPolicy: 'network-only'});
-    const [mutation] = useMutation(CreateFolderMutation, {
+    // Const {loading, data} = useQuery(CreateFolderQuery, {variables: gqlParams.query, fetchPolicy: 'network-only'});
+    const [mutation] = useMutation(CreateReleaseMutation, {
         onCompleted: () => {
             client.cache.flushNodeEntryByPath(path);
-            triggerRefetchAll();
+            // TriggerRefetchAll();
         }
     });
 
-    useEffect(() => {
-        if (data && data.jcr && data.jcr.nodeByPath) {
-            updateChildNodes(data.jcr.nodeByPath.children.nodes);
-        }
-    }, [data, updateChildNodes]);
-
+    // UseEffect(() => {
+    //     if (data && data.jcr && data.jcr.nodeByPath) {
+    //         updateChildNodes(data.jcr.nodeByPath.children.nodes);
+    //     }
+    // }, [data, updateChildNodes]);
     return (
-        <CreateFolderDialog open={open}
-                            name={name}
-                            loading={loading}
-                            isNameValid={isNameValid}
-                            isNameAvailable={isNameAvailable}
-                            handleCancel={handleCancel}
-                            handleCreate={() => handleCreate(mutation)}
-                            onChangeName={onChangeName}/>
+        <CreateReleaseDialog open={showDialogCreateRelease}
+                             name={name}
+                             isNameValid={isNameValid}
+                             isNameAvailable={isNameAvailable}
+                             handleCancel={handleCancel}
+                             handleCreate={() => handleCreate(mutation)}
+                             onChangeName={onChangeName}/>
     );
 };
 
-CreateFolderDialogContainer.propTypes = {
+CreateReleaseDialogContainer.propTypes = {
     path: PropTypes.string.isRequired,
-    contentType: PropTypes.string.isRequired,
-    onExit: PropTypes.func.isRequired
+    contentType: PropTypes.string.isRequired
+    // OnExit: PropTypes.func.isRequired
 };
 
-export default CreateFolderDialogContainer;
+export default CreateReleaseDialogContainer;
