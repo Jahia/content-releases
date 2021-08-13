@@ -1,0 +1,16 @@
+{
+  "name": "jmix:releaseItem",
+  "fields": [
+    {
+      "name": "release",
+      "multiple": true,
+      "selectorType": "Picker",
+      "selectorOptions":[
+        {
+          "name": "type",
+          "value" : "releaseNode"
+        }
+      ]
+    }
+  ]
+}

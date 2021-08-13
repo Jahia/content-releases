@@ -6,6 +6,7 @@ import CreateReleaseDialog from './CreateReleaseDialog';
 // Import {triggerRefetchAll} from '../../../JContent.refetches';
 import {useApolloClient, useMutation} from '@apollo/react-hooks';
 import {StoreContext} from '../../contexts';
+import get from 'lodash.get';
 
 const CreateReleaseDialogContainer = ({path, contentType}) => {
     const {state, dispatch} = React.useContext(StoreContext);
@@ -42,6 +43,7 @@ const CreateReleaseDialogContainer = ({path, contentType}) => {
     const handleCreate = mutation => {
         // Do mutation to create folder.
         gqlParams.mutation.releaseName = name;
+        gqlParams.mutation.jcrReleaseName = name.toLowerCase().replace(/\s/g, '-').substr(0, 31);
         mutation({variables: gqlParams.mutation});
         // TODO voir ce que la mutation retourne, update de la liste des release?
         dispatch({
@@ -57,6 +59,16 @@ const CreateReleaseDialogContainer = ({path, contentType}) => {
         onCompleted: () => {
             client.cache.flushNodeEntryByPath(path);
             // TriggerRefetchAll();
+        },
+        update(cache, result) {
+            console.log('mutation update result :', result);
+
+            dispatch({
+                case: 'ADD_NEW_RELEASE',
+                payload: {
+                    releaseData: get(result, 'data.jcr.create.release', {})
+                }
+            });
         }
     });
 

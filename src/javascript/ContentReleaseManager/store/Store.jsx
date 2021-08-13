@@ -1,6 +1,8 @@
 import React from 'react';
 import {StoreContext} from '../contexts';
 import releasesMapper from '../ReleasesModel';
+import releaseMapper from '../ReleaseModel';
+
 import PropTypes from 'prop-types';
 
 const init = () => {
@@ -8,6 +10,7 @@ const init = () => {
     return {
         showDialogHelp: false,
         showDialogCreateRelease: false,
+        rootID: null,
         releases: []// Array of release
     };
 };
@@ -19,11 +22,12 @@ const reducer = (state, action) => {
         case 'DATA_READY': {
             const {releasesData} = payload;
             console.debug('[STORE] DATA_READY - releasesData: ', releasesData);
-            const releases = releasesMapper(releasesData);
+            const releaseFolder = releasesMapper(releasesData);
 
             return {
                 ...state,
-                releases
+                rootID: releaseFolder.id,
+                releases: releaseFolder.releases
             };
         }
 
@@ -36,10 +40,23 @@ const reducer = (state, action) => {
         }
 
         case 'TOGGLE_SHOW_DIALOG_HELP': {
-            console.debug('[STORE] TOGGLE_SHOW_DIALOG_CREATE');
+            console.debug('[STORE] TOGGLE_SHOW_DIALOG_HELP');
             return {
                 ...state,
                 showDialogHelp: !state.showDialogHelp
+            };
+        }
+
+        case 'ADD_NEW_RELEASE': {
+            const {releaseData} = payload;
+            let {releases} = state;
+            console.debug('[STORE] ADD_NEW_RELEASE - releaseData: ', releaseData);
+            const newRelease = releaseMapper(releaseData);
+            releases = [...releases, newRelease];
+
+            return {
+                ...state,
+                releases
             };
         }
 

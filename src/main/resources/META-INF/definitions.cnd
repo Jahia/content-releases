@@ -7,4 +7,4 @@
  - release (weakreference) multiple indexed=no < jnt:release
 
 [jnt:release] > jnt:content, jmix:editorialContent, jmix:visibleInContentTree, jmix:droppableContent
-- name (string) indexed=no
+- name (string)

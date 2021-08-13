@@ -29,36 +29,37 @@ const CreateFolderDialog = ({classes, t, open, name, isNameValid, isNameAvailabl
                 classes={{paper: classes.root}}
                 onClose={handleCancel}
         >
-            <DialogTitle id="form-dialog-title">{t('jcontent:label.contentManager.createFolderAction.title')}</DialogTitle>
+            <DialogTitle id="form-dialog-title">{t('content-releases:label.layout.dialog.createReleaseAction.title')}</DialogTitle>
             <DialogContent>
                 <DialogContentText className={!isNameValid || !isNameAvailable ? classes.error : null}>
-                    {t('jcontent:label.contentManager.createFolderAction.text')}
+                    {t('content-releases:label.layout.dialog.createReleaseAction.text')}
                 </DialogContentText>
                 <TextField
                     fullWidth
                     autoFocus
                     error={!isNameValid || !isNameAvailable}
                     value={name}
-                    id="folder-name"
-                    aria-describedby="folder-name-error-text"
+                    // Label={t('content-releases:label.layout.dialog.createReleaseAction.fieldName')}
+                    id="release-name"
+                    aria-describedby="release-name-error-text"
                     margin="dense"
-                    helperText={isNameAvailable ? '' : t('jcontent:label.contentManager.createFolderAction.exists')}
+                    helperText={isNameAvailable ? '' : t('content-releases:label.layout.dialog.createReleaseAction.exists')}
                     onChange={onChangeName}
                 />
             </DialogContent>
             <DialogActions>
                 <Button
                     size="big"
-                    data-cm-role="create-folder-as-cancel"
-                    label={t('jcontent:label.contentManager.createFolderAction.cancel')}
+                    data-cm-role="create-release-as-cancel"
+                    label={t('content-releases:label.layout.dialog.createReleaseAction.cancel')}
                     onClick={handleCancel}
                 />
                 <Button
                     color="accent"
                     size="big"
-                    data-cm-role="create-folder-as-confirm"
+                    data-cm-role="create-release-as-confirm"
                     isDisabled={!name || !isNameValid || !isNameAvailable}
-                    label={t('jcontent:label.contentManager.createFolderAction.ok')}
+                    label={t('content-releases:label.layout.dialog.createReleaseAction.ok')}
                     onClick={handleCreate}
                 />
             </DialogActions>

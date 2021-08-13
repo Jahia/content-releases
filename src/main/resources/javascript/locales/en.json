@@ -15,10 +15,19 @@
             "actions": "Actions"
           }
         }
+      },
+      "dialog": {
+        "createReleaseAction":{
+          "title": "Create content release",
+          "text": "Enter a Release name",
+          "exists": "The release name must be unique per site",
+          "cancel": "Cancel",
+          "ok": "Create"
+        },
+        "help": {
+          "close": "Close"
+        }
       }
-    },
-    "action": {
-      "title": "Content Release Manager - How to extend the ui ?"
     },
     "appsAccordion": {
       "title": "Content Release Manager"
