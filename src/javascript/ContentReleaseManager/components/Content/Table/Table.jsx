@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useTable} from 'react-table';
+import {useExpanded, useTable} from 'react-table';
 import {Table, TableHead, TableHeadCell, TableRow, TableBody, TableBodyCell, TablePagination} from '@jahia/moonstone';
 // Import {tablePaginationDataFlat} from './fakeData';
-
+// import {ContextualMenu} from '@jahia/ui-extender';
 import {useTranslation} from 'react-i18next';
 import {withStyles} from '@material-ui/core';
 import classnames from 'clsx';
@@ -59,8 +59,9 @@ const styles = () => ({
 const TableCmp = props => {
     const {classes} = props;
     console.log('TableCmp props:', props);
+
     const {t} = useTranslation('content-releases');
-    const {state} = React.useContext(StoreContext);
+    const {state, dispatch} = React.useContext(StoreContext);
     const {
         releases
     } = state;
@@ -98,13 +99,29 @@ const TableCmp = props => {
         getTableBodyProps,
         headerGroups,
         rows,
-        prepareRow
+        prepareRow,
+        toggleAllRowsExpanded
     } = useTable(
         {
             data,
             columns
-        }
+        },
+        useExpanded
     );
+
+    React.useEffect(() => {
+        toggleAllRowsExpanded();
+    }, [toggleAllRowsExpanded]);
+
+    const handleClick = release => {
+        console.log('handleClick table release : ', release);
+        dispatch({
+            case: 'TOGGLE_SHOW_DIALOG_RELEASE_CONTENT',
+            payload: {
+                release
+            }
+        });
+    };
 
     return (
         <div className={classnames(
@@ -135,14 +152,24 @@ const TableCmp = props => {
                                 <TableBody {...getTableBodyProps()}>
                                     {rows.map(row => {
                                         prepareRow(row);
+                                        const rowProps = row.getRowProps();
                                         return (
                                             // A key is included in row.getRowProps
                                             // eslint-disable-next-line react/jsx-key
-                                            <TableRow {...row.getRowProps()}>
+                                            <TableRow key={'row' + row.id}
+                                                      {...rowProps}
+                                                      isSelected={row.isSelected}
+                                                      data-cm-role="table-content-list-row"
+                                                      onClick={() => handleClick(row.original)}
+                                            >
+
                                                 {row.cells.map(cell => (
                                                     // A key is included in cell.getCellProps
                                                     // eslint-disable-next-line react/jsx-key
-                                                    <TableBodyCell {...cell.getCellProps()} width={cell.column.customWidth}>
+                                                    <TableBodyCell
+                                                        {...cell.getCellProps()}
+                                                        width={cell.column.customWidth}
+                                                    >
                                                         {cell.render('Cell')}
                                                     </TableBodyCell>
                                                 ))}

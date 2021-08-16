@@ -11,6 +11,7 @@ import {useQuery} from '@apollo/react-hooks';
 import {GET_RELEASES} from './Releases.gql-queries';
 import CreateReleaseDialogContainer from './actions/CreateReleaseAction/CreateReleaseDialog.container';
 import Help from './components/Content/Help';
+import ReleaseContent from './components/Content/ReleaseContent';
 
 const styles = () => ({
     root: {
@@ -28,7 +29,8 @@ const ContentReleaseManagerCmp = props => {
 
     const gqlParams = {
         workspace: 'EDIT',
-        path: `/sites/${window.contextJsParameters.siteKey}/releases-manager/releases`
+        path: `/sites/${window.contextJsParameters.siteKey}/releases-manager/releases`,
+        language: window.contextJsParameters.lang
     };
     const {loading, error, data} = useQuery(GET_RELEASES, {
         variables: gqlParams
@@ -71,6 +73,7 @@ const ContentReleaseManagerCmp = props => {
                 contentType={contentType}
             />
             <Help display="dialog"/>
+            <ReleaseContent/>
         </main>
 
     );

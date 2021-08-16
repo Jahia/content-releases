@@ -4,7 +4,7 @@
 [jmix:releaseItem] mixin
  extends = jnt:content, jnt:page
  itemtype = options
- - release (weakreference) multiple indexed=no < jnt:release
+ - releases (weakreference,choicelist[nodes='$currentSite/releases-manager/releases;jnt:release']) multiple < jnt:release
 
-[jnt:release] > jnt:content, jmix:editorialContent, jmix:visibleInContentTree, jmix:droppableContent
+[jnt:release] > jnt:content, jmix:editorialContent,jmix:droppableContent
 - name (string)

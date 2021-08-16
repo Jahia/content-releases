@@ -10,8 +10,10 @@ const init = () => {
     return {
         showDialogHelp: false,
         showDialogCreateRelease: false,
+        showDialogReleaseContent: false,
         rootID: null,
-        releases: []// Array of release
+        releases: [], // Array of release
+        releaseToShow: null
     };
 };
 
@@ -24,6 +26,7 @@ const reducer = (state, action) => {
             console.debug('[STORE] DATA_READY - releasesData: ', releasesData);
             const releaseFolder = releasesMapper(releasesData);
 
+            console.log('[STORE] DATA_READY - releases : ', releaseFolder.releases);
             return {
                 ...state,
                 rootID: releaseFolder.id,
@@ -44,6 +47,17 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 showDialogHelp: !state.showDialogHelp
+            };
+        }
+
+        case 'TOGGLE_SHOW_DIALOG_RELEASE_CONTENT': {
+            const {release} = payload;
+            console.debug('[STORE] TOGGLE_SHOW_DIALOG_RELEASE_CONTENT - release ', release);
+
+            return {
+                ...state,
+                releaseToShow: release || null,
+                showDialogReleaseContent: !state.showDialogReleaseContent
             };
         }
 

@@ -3,39 +3,43 @@ import React from 'react';
 import {
     Dialog,
     DialogActions,
-    DialogContent,
+    DialogContent, DialogTitle,
     // DialogContentText,
     withStyles
 } from '@material-ui/core';
 import {Button} from '@jahia/moonstone';
 import {compose} from '../../../utils';
 import {withTranslation} from 'react-i18next';
-import HelpContent from './HelpContent';
+import ReleaseContentDisplay from './ReleaseContentDisplay';
 
 let styles = theme => ({
     root: {
-        minWidth: '600px'
+        minWidth: '80%'
     },
     error: {
         color: theme.palette.error.main
     }
 });
 
-const HelpDialog = ({classes, t, open, handleClose}) => {
+const ReleaseContentDialog = ({classes, t, open, handleClose, release}) => {
     return (
         <Dialog open={open}
+                aria-labelledby="releaseContent-dialog-title"
                 classes={{paper: classes.root}}
                 onClose={handleClose}
         >
+            <DialogTitle id="releaseContent-dialog-title">
+                {release.name}
+            </DialogTitle>
             <DialogContent>
-                <HelpContent/>
+                <ReleaseContentDisplay items={release.items}/>
                 {/* <DialogContentText> */}
                 {/* </DialogContentText> */}
             </DialogContent>
             <DialogActions>
                 <Button
                     size="big"
-                    data-cm-role="help-as-close"
+                    data-cm-role="releaseContent-as-close"
                     label={t('content-releases:label.layout.dialog.help.close')}
                     onClick={handleClose}
                 />
@@ -44,14 +48,15 @@ const HelpDialog = ({classes, t, open, handleClose}) => {
     );
 };
 
-HelpDialog.propTypes = {
+ReleaseContentDialog.propTypes = {
     t: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
-    open: PropTypes.func.isRequired
+    open: PropTypes.func.isRequired,
+    release: PropTypes.object.isRequired
 };
 
 export default compose(
     withTranslation(),
     withStyles(styles)
-)(HelpDialog);
+)(ReleaseContentDialog);
