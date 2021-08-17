@@ -24,10 +24,21 @@
           "cancel": "Cancel",
           "ok": "Create"
         },
+        "updateReleaseAction":{
+          "title": "Update content release",
+          "text": "Enter a Release name",
+          "exists": "The release name must be unique per site",
+          "cancel": "Cancel",
+          "ok": "Update"
+        },
         "help": {
           "close": "Close"
         }
       }
+    },
+    "action": {
+      "edit": "Edit",
+      "delete": "Delete"
     },
     "appsAccordion": {
       "title": "Content Release Manager"

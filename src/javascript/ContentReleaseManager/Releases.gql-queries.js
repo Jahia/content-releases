@@ -33,7 +33,6 @@ export const GET_RELEASES = gql`
             }
         }
     }
-
 `;
 //    ${PredefinedFragments.nodeCacheRequiredFields.gql}
 // ${propsFragment}

@@ -17,7 +17,7 @@ const HeaderCmp = props => {
         dispatch({
             case: 'TOGGLE_SHOW_DIALOG_HELP'
         });
-
+    // TODO mettre un refresh button
     return (
         <Header
             title={t('label.layout.header.title')}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useExpanded, useTable} from 'react-table';
+import {useTable} from 'react-table';
 import {Table, TableHead, TableHeadCell, TableRow, TableBody, TableBodyCell, TablePagination} from '@jahia/moonstone';
 // Import {tablePaginationDataFlat} from './fakeData';
 // import {ContextualMenu} from '@jahia/ui-extender';
@@ -8,6 +8,8 @@ import {useTranslation} from 'react-i18next';
 import {withStyles} from '@material-ui/core';
 import classnames from 'clsx';
 import {StoreContext} from '../../../contexts';
+import MenuAction from './Cells/MenuAction';
+import ReleaseName from './Cells/ReleaseName';
 
 const columnsWidth = {
     actions: '120px',
@@ -61,7 +63,7 @@ const TableCmp = props => {
     console.log('TableCmp props:', props);
 
     const {t} = useTranslation('content-releases');
-    const {state, dispatch} = React.useContext(StoreContext);
+    const {state} = React.useContext(StoreContext);
     const {
         releases
     } = state;
@@ -69,15 +71,32 @@ const TableCmp = props => {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [currentPage, setCurrentPage] = React.useState(1);
     const data = React.useMemo(() => releases.slice((currentPage - 1) * rowsPerPage, Math.min(releases.length, currentPage * rowsPerPage)), [releases, currentPage, rowsPerPage]);
+    // TODO faire un Cell sur le titre pour brancher le onclick dialog au lieu de la row
     const columns = React.useMemo(() => [
-        {Header: t('label.layout.content.table.header.name'), accessor: 'name', id: 'name'},
+        {
+            Header: t('label.layout.content.table.header.name'),
+            accessor: 'name',
+            id: 'name',
+            Cell: cellInfo => {
+                const release = cellInfo.row.original;
+                return <ReleaseName release={release}/>;
+            }
+        },
         {
             Header: t('label.layout.content.table.header.items'),
             id: 'items',
             accessor: row => row.items.length,
             customWidth: columnsWidth.items
         },
-        {Header: t('label.layout.content.table.header.actions'), accessor: 'actions', customWidth: columnsWidth.actions}
+        {
+            Header: t('label.layout.content.table.header.actions'),
+            accessor: 'actions',
+            Cell: cellInfo => {
+                const release = cellInfo.row.original;
+                return <MenuAction release={release}/>;
+            },
+            customWidth: columnsWidth.actions
+        }
     ], [t]);
 
     // Const columns = React.useMemo(() => [
@@ -99,29 +118,13 @@ const TableCmp = props => {
         getTableBodyProps,
         headerGroups,
         rows,
-        prepareRow,
-        toggleAllRowsExpanded
+        prepareRow
     } = useTable(
         {
             data,
             columns
-        },
-        useExpanded
+        }
     );
-
-    React.useEffect(() => {
-        toggleAllRowsExpanded();
-    }, [toggleAllRowsExpanded]);
-
-    const handleClick = release => {
-        console.log('handleClick table release : ', release);
-        dispatch({
-            case: 'TOGGLE_SHOW_DIALOG_RELEASE_CONTENT',
-            payload: {
-                release
-            }
-        });
-    };
 
     return (
         <div className={classnames(
@@ -152,15 +155,11 @@ const TableCmp = props => {
                                 <TableBody {...getTableBodyProps()}>
                                     {rows.map(row => {
                                         prepareRow(row);
-                                        const rowProps = row.getRowProps();
                                         return (
                                             // A key is included in row.getRowProps
                                             // eslint-disable-next-line react/jsx-key
-                                            <TableRow key={'row' + row.id}
-                                                      {...rowProps}
-                                                      isSelected={row.isSelected}
+                                            <TableRow {...row.getRowProps()}
                                                       data-cm-role="table-content-list-row"
-                                                      onClick={() => handleClick(row.original)}
                                             >
 
                                                 {row.cells.map(cell => (

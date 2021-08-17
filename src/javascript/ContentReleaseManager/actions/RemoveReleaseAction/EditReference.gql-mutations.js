@@ -1,12 +1,7 @@
 import {gql} from 'apollo-boost';
 
 const CreateReleaseMutation = gql`
-    mutation CreateReleaseMutation(
-        $parentPath: String!,
-        $jcrReleaseName: String!,
-        $releaseName: String!,
-        $primaryNodeType: String!
-    ) {
+    mutation CreateReleaseMutation($parentPath: String!,$jcrReleaseName: String!, $releaseName: String!, $primaryNodeType: String!) {
         jcr {
             create: addNode(
                 parentPathOrId: $parentPath,

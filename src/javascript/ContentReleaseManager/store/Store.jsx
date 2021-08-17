@@ -10,10 +10,12 @@ const init = () => {
     return {
         showDialogHelp: false,
         showDialogCreateRelease: false,
+        showDialogEditRelease: false,
         showDialogReleaseContent: false,
         rootID: null,
         releases: [], // Array of release
-        releaseToShow: null
+        releaseToShow: null,
+        releaseToUpdate: null
     };
 };
 
@@ -42,6 +44,16 @@ const reducer = (state, action) => {
             };
         }
 
+        case 'TOGGLE_SHOW_DIALOG_EDIT': {
+            const {release} = payload;
+            console.debug('[STORE] TOGGLE_SHOW_DIALOG_EDIT- release ', release);
+            return {
+                ...state,
+                releaseToUpdate: release || null,
+                showDialogEditRelease: !state.showDialogEditRelease
+            };
+        }
+
         case 'TOGGLE_SHOW_DIALOG_HELP': {
             console.debug('[STORE] TOGGLE_SHOW_DIALOG_HELP');
             return {
@@ -67,6 +79,20 @@ const reducer = (state, action) => {
             console.debug('[STORE] ADD_NEW_RELEASE - releaseData: ', releaseData);
             const newRelease = releaseMapper(releaseData);
             releases = [...releases, newRelease];
+
+            return {
+                ...state,
+                releases
+            };
+        }
+
+        case 'ADD_UPDATED_RELEASE': {
+            const {releaseData} = payload;
+            let {releases} = state;
+            console.debug('[STORE] ADD_NEW_RELEASE - releaseData: ', releaseData);
+            const updatedRelease = releaseMapper(releaseData);
+            releases = releases.filter(release => release.id !== updatedRelease.id);
+            releases = [...releases, updatedRelease];
 
             return {
                 ...state,

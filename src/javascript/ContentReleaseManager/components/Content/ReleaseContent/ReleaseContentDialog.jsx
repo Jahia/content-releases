@@ -14,7 +14,8 @@ import ReleaseContentDisplay from './ReleaseContentDisplay';
 
 let styles = theme => ({
     root: {
-        minWidth: '80%'
+        minWidth: '800px',
+        width: '60%'
     },
     error: {
         color: theme.palette.error.main

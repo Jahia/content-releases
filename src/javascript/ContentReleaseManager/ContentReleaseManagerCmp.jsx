@@ -10,6 +10,7 @@ import {StoreContext} from './contexts';
 import {useQuery} from '@apollo/react-hooks';
 import {GET_RELEASES} from './Releases.gql-queries';
 import CreateReleaseDialogContainer from './actions/CreateReleaseAction/CreateReleaseDialog.container';
+import EditReleaseDialogContainer from './actions/EditReleaseAction/EditReleaseDialog.container';
 import Help from './components/Content/Help';
 import ReleaseContent from './components/Content/ReleaseContent';
 
@@ -25,7 +26,9 @@ const contentType = 'jnt:release';
 const ContentReleaseManagerCmp = props => {
     console.log('ContentReleaseManagerCmp props:', props);
     const {classes} = props;
-    const {dispatch} = React.useContext(StoreContext);
+    const {state, dispatch} = React.useContext(StoreContext);
+
+    const {releaseToUpdate} = state;
 
     const gqlParams = {
         workspace: 'EDIT',
@@ -72,6 +75,8 @@ const ContentReleaseManagerCmp = props => {
                 path={gqlParams.path}
                 contentType={contentType}
             />
+            {releaseToUpdate &&
+                <EditReleaseDialogContainer/>}
             <Help display="dialog"/>
             <ReleaseContent/>
         </main>
