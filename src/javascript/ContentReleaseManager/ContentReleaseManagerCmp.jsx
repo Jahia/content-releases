@@ -36,7 +36,8 @@ const ContentReleaseManagerCmp = props => {
         language: window.contextJsParameters.lang
     };
     const {loading, error, data} = useQuery(GET_RELEASES, {
-        variables: gqlParams
+        variables: gqlParams,
+        fetchPolicy: 'no-cache'
     });
 
     React.useEffect(() => {

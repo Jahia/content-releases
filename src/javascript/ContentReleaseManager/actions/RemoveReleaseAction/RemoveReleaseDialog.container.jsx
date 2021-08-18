@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
+import {gql} from 'apollo-boost';
 // Import {CreateFolderQuery} from './CreateReleaseDialog.gql-queries';
-import {CreateReleaseMutation} from 'src/javascript/ContentReleaseManager/actions/DeleteReleaseAction/DeleteRelease.gql-mutations';
+import {DeleteReleaseMutation} from './DeleteRelease.gql-mutations';
+import {EditReferenceMutation} from './EditReference.gql-mutations';
 import PropTypes from 'prop-types';
 import CreateReleaseDialog from 'src/javascript/ContentReleaseManager/actions/DeleteReleaseAction/RemoveReleaseDialog';
 // Import {triggerRefetchAll} from '../../../JContent.refetches';
@@ -8,44 +10,87 @@ import {useApolloClient, useMutation} from '@apollo/react-hooks';
 import {StoreContext} from '../../contexts';
 import get from 'lodash.get';
 
+const getDeleteRefQueryMutation = ({uuid}) => `
+    updateRef_${uuid}: mutateNode(pathOrId: ${uuid}) {
+        mutateProperty(name: "release") {
+            delete(language: ${window.contextJsParameters.lang})
+        }
+    }`
+
+const getUpadteRefQueryMutation = ({uuid,values}) => `
+    updateRef_${uuid}: mutateNode(pathOrId: ${uuid}) {
+        mutateProperty(name: "release") {
+            setValues (
+                language:${window.contextJsParameters.lang},
+                type:"WEAKREFERENCE",
+                values:${values})
+            )
+        }
+    }`
+
+const getRmoveReleaseQueryMutation = ({uuid}) =>
+    `deleteRelease: deleteNode(pathOrId:$uuid)`
+
+
 const RemoveReleaseDialogContainer = ({path, contentType}) => {
     const {state, dispatch} = React.useContext(StoreContext);
     const {
-        showDialogCreateRelease,
+        showDialogRemoveRelease,
+        releaseToRemove,
         releases
     } = state;
 
-    // Const [open, updateIsDialogOpen] = useState(true);
-    const [name, updateName] = useState('');
-    const [isNameValid, updateIsNameValid] = useState(true);
-    const [isNameAvailable, updateIsNameAvailable] = useState(true);
 
     const invalidRegex = /[\\/:*?"<>|]/g;
     const gqlParams = {
-        mutation: {
-            parentPath: path,
-            primaryNodeType: contentType
+        removeMutation:{
+            uuid:releaseToRemove.id
         }
     };
 
-    const onChangeName = e => {
-        // Handle validation for name change
-        updateIsNameValid(e.target.value && e.target.value.match(invalidRegex) === null);
-        updateIsNameAvailable(releases.find(release => release.name === e.target.value) === undefined);
-        updateName(e.target.value);
-    };
+    //todo voir si j'ai besoin d'un state pour gerer la query et d'un useEffect dependant de releaseToRemove
+    const getQuery = () => {
+        let query = `
+        mutation RemoveRelease() {
+            jcr {
+        `;
+
+        releaseToRemove.items.forEach(item => {
+            if(item.releases.length>1){
+                query += getUpadteRefQueryMutation({
+                    uuid:item.id,
+                    values:item.releases.filter(id => id !== releaseToRemove.id)
+                })
+            }else{
+                query += getDeleteRefQueryMutation({
+                    uuid:item.id
+                })
+            }
+        })
+        query += `
+                ${getRmoveReleaseQueryMutation({uuid:releaseToRemove.id})}
+            }
+        }
+        `;
+        console.log("getQuery query => ",query);
+        return gql`${query}`;
+    }
 
     const handleCancel = () =>
         dispatch({
-            case: 'TOGGLE_SHOW_DIALOG_CREATE'
+            case: 'TOGGLE_SHOW_DIALOG_REMOVE'
         });
 
-    const handleCreate = mutation => {
-        // Do mutation to create folder.
-        gqlParams.mutation.releaseName = name;
-        gqlParams.mutation.jcrReleaseName = name.toLowerCase().replace(/\s/g, '-').substr(0, 31);
-        mutation({variables: gqlParams.mutation});
-        // TODO voir ce que la mutation retourne, update de la liste des release?
+    const handleRemove = mutation => {
+        //#1 remove all references do an await function ?
+
+        //#2 (update current release)
+        //#3 remove release
+        //after await do that
+        removeMutation({variables: gqlParams.mutation});
+        //#2Bis (refetch)
+
+
         dispatch({
             case: 'TOGGLE_SHOW_DIALOG_CREATE'
         });
@@ -55,18 +100,48 @@ const RemoveReleaseDialogContainer = ({path, contentType}) => {
 
     const client = useApolloClient();
     // Const {loading, data} = useQuery(CreateFolderQuery, {variables: gqlParams.query, fetchPolicy: 'network-only'});
-    const [mutation] = useMutation(CreateReleaseMutation, {
+
+    const [mutation]=useMutation(getQuery(), {
+        refetchQueries: [
+            {
+                query: NodeQuery,
+                variables: {
+                    uuid: nodeData.uuid,
+                    language,
+                    uilang: uilang,
+                    writePermission: `jcr:modifyProperties_default_${language}`,
+                    childrenFilterTypes: Constants.childrenFilterTypes
+                }
+            }
+        ],
         onCompleted: () => {
-            client.cache.flushNodeEntryByPath(path);
+            // client.cache.flushNodeEntryById(releaseToRemove.id);
+            // TriggerRefetchAll();
+        },
+        update(cache, result) {
+            console.log('EditReferenceMutation update result :', result);
+
+            dispatch({
+                case: 'UPDATE_RELEASE_REFERENCE',
+                payload: {
+                    uuid: releaseToRemove.id
+                }
+            });
+        }
+    });
+
+    const [removeMutation] = useMutation(DeleteReleaseMutation, {
+        onCompleted: () => {
+            client.cache.flushNodeEntryById(releaseToRemove.id);
             // TriggerRefetchAll();
         },
         update(cache, result) {
             console.log('mutation update result :', result);
 
             dispatch({
-                case: 'ADD_NEW_RELEASE',
+                case: 'DELETE_RELEASE',
                 payload: {
-                    releaseData: get(result, 'data.jcr.create.release', {})
+                    uuid: releaseToRemove.id
                 }
             });
         }
@@ -83,7 +158,7 @@ const RemoveReleaseDialogContainer = ({path, contentType}) => {
                              isNameValid={isNameValid}
                              isNameAvailable={isNameAvailable}
                              handleCancel={handleCancel}
-                             handleCreate={() => handleCreate(mutation)}
+                             handleRemove={() => handleRemove(mutation)}
                              onChangeName={onChangeName}/>
     );
 };

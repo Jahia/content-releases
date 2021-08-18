@@ -6,7 +6,8 @@ const getItems = nodes => nodes.map(_node_ => {
     console.log('getItems type :', get(node, 'type.value'));
     return {
         ...node,
-        type: get(node, 'type.value')
+        type: get(node, 'type.value'),
+        releases: get(node, 'releases.release', []).map(release => release.id)
     };
 });
 
@@ -20,7 +21,7 @@ const ReleaseMapper = releaseData => {
         type: get(releaseData, 'type.value'),
         name: get(releaseData, 'name.value'),
         items: getItems(get(releaseData, 'items.nodes', [])),
-        actions: '...'
+        actions: ''// It is needed ?
     };
 };
 

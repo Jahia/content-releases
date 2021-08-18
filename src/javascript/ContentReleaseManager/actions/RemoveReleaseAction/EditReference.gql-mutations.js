@@ -1,29 +1,36 @@
 import {gql} from 'apollo-boost';
 
-const CreateReleaseMutation = gql`
-    mutation CreateReleaseMutation($parentPath: String!,$jcrReleaseName: String!, $releaseName: String!, $primaryNodeType: String!) {
+const EditReferenceMutation = gql`
+    mutation EditReleaseProperties(
+        $uuid:String!,
+        $query:String!,
+        $language:String!
+    ) {
         jcr {
-            create: addNode(
-                parentPathOrId: $parentPath,
-                name: $jcrReleaseName,
-                primaryNodeType: $primaryNodeType
-                properties:[{
-                    name:"name",
-                    value:$releaseName
-                }]
-            ) {
+            updateReferences: mutateNodesByQuery(
+                query: $query
+                queryLanguage: SQL2
+            ){
+                mutateProperty(name: "releases") {
+                    removeValue(value: $uuid,type:WEAKREFERENCE)
+                }
                 release: node {
                     id: uuid
+                    path
                     type: primaryNodeType{
                         value:name
                     }
-                    name: property(name:"name"){
-                        value
+                    name:displayName(language: $language)
+                    releases: property(name:"releases"){
+                        release : refNodes{
+                            id:uuid
+                        }
                     }
                 }
             }
+            delete: deleteNode(pathOrId:$uuid)
         }
     }
 `;
 
-export {CreateReleaseMutation};
+export {EditReferenceMutation};

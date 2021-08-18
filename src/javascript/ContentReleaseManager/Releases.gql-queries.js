@@ -25,6 +25,11 @@ export const GET_RELEASES = gql`
                                         value:name
                                     }
                                     name:displayName(language: $language)
+                                    releases: property(name:"releases"){
+                                        release : refNodes{
+                                            id:uuid
+                                        }
+                                    }
                                 }
                             }
                         }
