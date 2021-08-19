@@ -4,7 +4,8 @@
       "header": {
         "title": "Content Release",
         "btn": {
-          "create": "Add release"
+          "create": "Add release",
+          "refresh": "Refresh"
         }
       },
       "content": {
@@ -30,6 +31,11 @@
           "exists": "The release name must be unique per site",
           "cancel": "Cancel",
           "ok": "Update"
+        },
+        "removeReleaseAction":{
+          "title": "Remove content release",
+          "cancel": "Cancel",
+          "ok": "Remove"
         },
         "help": {
           "close": "Close"

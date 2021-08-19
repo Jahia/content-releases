@@ -32,12 +32,18 @@ const HelpContent = () => {
         return <p>Error :(</p>;
     }
 
-    console.log('content :', content);
+    // Console.log('content :', content);
+    // <Typography component="div"
+    //             isHtml="true"
+    // >
+    //     {DOMPurify.sanitize(content, {ADD_ATTR: ['target']})}
+    // </Typography>}
     return (
         <>
             {content &&
             <Typography component="div"
                         dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(content, {ADD_ATTR: ['target']})}}/>}
+
         </>
     );
 };

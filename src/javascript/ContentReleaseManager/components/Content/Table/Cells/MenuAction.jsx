@@ -37,7 +37,6 @@ const MenuAction = props => {
 
     const handleEditClick = () => {
         setIsDisplayed(false);
-        // Console.log('TODO dispatch release to EDIT et open dialog', release);
         dispatch({
             case: 'TOGGLE_SHOW_DIALOG_EDIT',
             payload: {
@@ -48,7 +47,12 @@ const MenuAction = props => {
 
     const handleDeleteClick = () => {
         setIsDisplayed(false);
-        console.log('TODO dispatch release to DELETE et open dialog');
+        dispatch({
+            case: 'TOGGLE_SHOW_DIALOG_REMOVE',
+            payload: {
+                release
+            }
+        });
     };
 
     return (

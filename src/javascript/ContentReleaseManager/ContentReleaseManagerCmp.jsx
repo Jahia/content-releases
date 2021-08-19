@@ -11,6 +11,7 @@ import {useQuery} from '@apollo/react-hooks';
 import {GET_RELEASES} from './Releases.gql-queries';
 import CreateReleaseDialogContainer from './actions/CreateReleaseAction/CreateReleaseDialog.container';
 import EditReleaseDialogContainer from './actions/EditReleaseAction/EditReleaseDialog.container';
+import RemoveReleaseDialogContainer from './actions/RemoveReleaseAction/RemoveReleaseDialog.container';
 import Help from './components/Content/Help';
 import ReleaseContent from './components/Content/ReleaseContent';
 
@@ -28,16 +29,19 @@ const ContentReleaseManagerCmp = props => {
     const {classes} = props;
     const {state, dispatch} = React.useContext(StoreContext);
 
-    const {releaseToUpdate} = state;
+    const {
+        releaseToUpdate,
+        releaseToRemove
+    } = state;
 
     const gqlParams = {
         workspace: 'EDIT',
         path: `/sites/${window.contextJsParameters.siteKey}/releases-manager/releases`,
         language: window.contextJsParameters.lang
     };
-    const {loading, error, data} = useQuery(GET_RELEASES, {
+    const {loading, error, data, refetch} = useQuery(GET_RELEASES, {
         variables: gqlParams,
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'network-only'
     });
 
     React.useEffect(() => {
@@ -51,6 +55,14 @@ const ContentReleaseManagerCmp = props => {
                 case: 'DATA_READY',
                 payload: {
                     releasesData
+                }
+            });
+            dispatch({
+                case: 'ADD_REFETCHER',
+                payload: {
+                    key: 'GET_RELEASES',
+                    refetch,
+                    queryParams: {variables: gqlParams}
                 }
             });
         }
@@ -78,6 +90,8 @@ const ContentReleaseManagerCmp = props => {
             />
             {releaseToUpdate &&
                 <EditReleaseDialogContainer/>}
+            {releaseToRemove &&
+                <RemoveReleaseDialogContainer/>}
             <Help display="dialog"/>
             <ReleaseContent/>
         </main>

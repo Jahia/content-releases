@@ -2,18 +2,20 @@ import React, {useState} from 'react';
 // Import {CreateFolderQuery} from './CreateReleaseDialog.gql-queries';
 import {EditReleaseMutation} from './EditRelease.gql-mutations';
 // Import PropTypes from 'prop-types';
-// TODO reuse the same dialog than the one to create ?
+// NOTE reuse the same dialog than the one to create ?
 import EditReleaseDialog from './EditReleaseDialog';
 import {useApolloClient, useMutation} from '@apollo/react-hooks';
 import {StoreContext} from '../../contexts';
-import get from 'lodash.get';
+// Import get from 'lodash.get';
+import {triggerRefetch} from '../../actions/refetch';
 
 const EditReleaseDialogContainer = () => {
     const {state, dispatch} = React.useContext(StoreContext);
     const {
         showDialogEditRelease,
         releaseToUpdate,
-        releases
+        releases,
+        refetchers
     } = state;
 
     const [name, updateName] = useState(releaseToUpdate.name);
@@ -36,7 +38,10 @@ const EditReleaseDialogContainer = () => {
 
     const handleCancel = () =>
         dispatch({
-            case: 'TOGGLE_SHOW_DIALOG_CREATE'
+            case: 'TOGGLE_SHOW_DIALOG_EDIT',
+            payload: {
+                release: null
+            }
         });
 
     const handleUpdate = mutation => {
@@ -60,18 +65,18 @@ const EditReleaseDialogContainer = () => {
     const [mutation] = useMutation(EditReleaseMutation, {
         onCompleted: () => {
             client.cache.flushNodeEntryById(releaseToUpdate.id);
-            // TriggerRefetchAll();
-        },
-        update(cache, result) {
-            console.log('mutation update result :', result);
-
-            dispatch({
-                case: 'ADD_UPDATED_RELEASE',
-                payload: {
-                    releaseData: get(result, 'data.jcr.update.release', {})
-                }
-            });
+            triggerRefetch(refetchers, 'GET_RELEASES');
         }
+        // Update(cache, result) {
+        //     console.log('mutation update result :', result);
+        //
+        //     dispatch({
+        //         case: 'ADD_UPDATED_RELEASE',
+        //         payload: {
+        //             releaseData: get(result, 'data.jcr.update.release', {})
+        //         }
+        //     });
+        // }
     });
 
     // UseEffect(() => {

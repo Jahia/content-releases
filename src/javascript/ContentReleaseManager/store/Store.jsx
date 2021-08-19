@@ -12,10 +12,13 @@ const init = () => {
         showDialogCreateRelease: false,
         showDialogEditRelease: false,
         showDialogReleaseContent: false,
+        showDialogRemoveRelease: false,
         rootID: null,
         releases: [], // Array of release
         releaseToShow: null,
-        releaseToUpdate: null
+        releaseToUpdate: null,
+        releaseToRemove: null,
+        refetchers: {}
     };
 };
 
@@ -36,6 +39,21 @@ const reducer = (state, action) => {
             };
         }
 
+        case 'ADD_REFETCHER': {
+            const {refetch, queryParams, key} = payload;
+            let {refetchers} = state;
+            console.debug('[STORE] ADD_REFETCHER');
+            refetchers = {
+                ...refetchers,
+                [key]: {refetch, queryParams}
+            };
+
+            return {
+                ...state,
+                refetchers
+            };
+        }
+
         case 'TOGGLE_SHOW_DIALOG_CREATE': {
             console.debug('[STORE] TOGGLE_SHOW_DIALOG_CREATE');
             return {
@@ -51,6 +69,16 @@ const reducer = (state, action) => {
                 ...state,
                 releaseToUpdate: release || null,
                 showDialogEditRelease: !state.showDialogEditRelease
+            };
+        }
+
+        case 'TOGGLE_SHOW_DIALOG_REMOVE': {
+            const {release} = payload;
+            console.debug('[STORE] TOGGLE_SHOW_DIALOG_REMOVE- release ', release);
+            return {
+                ...state,
+                releaseToRemove: release || null,
+                showDialogRemoveRelease: !state.showDialogRemoveRelease
             };
         }
 

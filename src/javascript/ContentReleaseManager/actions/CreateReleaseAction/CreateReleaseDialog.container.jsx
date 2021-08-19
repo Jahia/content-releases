@@ -6,13 +6,15 @@ import CreateReleaseDialog from './CreateReleaseDialog';
 // Import {triggerRefetchAll} from '../../../JContent.refetches';
 import {useApolloClient, useMutation} from '@apollo/react-hooks';
 import {StoreContext} from '../../contexts';
-import get from 'lodash.get';
+// Import get from 'lodash.get';
+import {triggerRefetch} from '../refetch';
 
 const CreateReleaseDialogContainer = ({path, contentType}) => {
     const {state, dispatch} = React.useContext(StoreContext);
     const {
         showDialogCreateRelease,
-        releases
+        releases,
+        refetchers
     } = state;
 
     // Const [open, updateIsDialogOpen] = useState(true);
@@ -45,12 +47,10 @@ const CreateReleaseDialogContainer = ({path, contentType}) => {
         gqlParams.mutation.releaseName = name;
         gqlParams.mutation.jcrReleaseName = name.toLowerCase().replace(/\s/g, '-').substr(0, 31);
         mutation({variables: gqlParams.mutation});
-        // TODO voir ce que la mutation retourne, update de la liste des release?
+
         dispatch({
             case: 'TOGGLE_SHOW_DIALOG_CREATE'
         });
-        // UpdateIsDialogOpen(false);
-        // onExit();
     };
 
     const client = useApolloClient();
@@ -58,18 +58,18 @@ const CreateReleaseDialogContainer = ({path, contentType}) => {
     const [mutation] = useMutation(CreateReleaseMutation, {
         onCompleted: () => {
             client.cache.flushNodeEntryByPath(path);
-            // TriggerRefetchAll();
-        },
-        update(cache, result) {
-            console.log('mutation update result :', result);
-
-            dispatch({
-                case: 'ADD_NEW_RELEASE',
-                payload: {
-                    releaseData: get(result, 'data.jcr.create.release', {})
-                }
-            });
+            triggerRefetch(refetchers, 'GET_RELEASES');
         }
+        // Update(cache, result) {
+        //     console.log('mutation update result :', result);
+        //
+        //     dispatch({
+        //         case: 'ADD_NEW_RELEASE',
+        //         payload: {
+        //             releaseData: get(result, 'data.jcr.create.release', {})
+        //         }
+        //     });
+        // }
     });
 
     // UseEffect(() => {

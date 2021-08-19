@@ -72,7 +72,7 @@ EditReleaseDialog.propTypes = {
     classes: PropTypes.object.isRequired,
     handleCancel: PropTypes.func.isRequired,
     handleUpdate: PropTypes.func.isRequired,
-    open: PropTypes.func.isRequired,
+    open: PropTypes.string.isRequired,
     isNameValid: PropTypes.bool.isRequired,
     isNameAvailable: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,

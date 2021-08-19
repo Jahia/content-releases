@@ -22,7 +22,7 @@ let styles = theme => ({
     }
 });
 
-const CreateFolderDialog = ({classes, t, open, name, isNameValid, isNameAvailable, handleCancel, handleCreate, onChangeName}) => {
+const CreateReleaseDialog = ({classes, t, open, name, isNameValid, isNameAvailable, handleCancel, handleCreate, onChangeName}) => {
     return (
         <Dialog open={open}
                 aria-labelledby="form-dialog-title"
@@ -67,12 +67,12 @@ const CreateFolderDialog = ({classes, t, open, name, isNameValid, isNameAvailabl
     );
 };
 
-CreateFolderDialog.propTypes = {
+CreateReleaseDialog.propTypes = {
     t: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     handleCancel: PropTypes.func.isRequired,
     handleCreate: PropTypes.func.isRequired,
-    open: PropTypes.func.isRequired,
+    open: PropTypes.string.isRequired,
     isNameValid: PropTypes.bool.isRequired,
     isNameAvailable: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
@@ -82,4 +82,4 @@ CreateFolderDialog.propTypes = {
 export default compose(
     withTranslation(),
     withStyles(styles)
-)(CreateFolderDialog);
+)(CreateReleaseDialog);

@@ -2,8 +2,8 @@ import get from 'lodash.get';
 
 const getItems = nodes => nodes.map(_node_ => {
     const node = _node_.node;
-    console.log('getItems node :', node);
-    console.log('getItems type :', get(node, 'type.value'));
+    // Console.log('getItems node :', node);
+    // console.log('getItems type :', get(node, 'type.value'));
     return {
         ...node,
         type: get(node, 'type.value'),
@@ -12,7 +12,7 @@ const getItems = nodes => nodes.map(_node_ => {
 });
 
 const ReleaseMapper = releaseData => {
-    console.log('releaseData : ', releaseData);
+    // Console.log('releaseData : ', releaseData);
 
     // NOTE be sure string value like "false" or "true" are boolean I use JSON.parse to cast
     return {

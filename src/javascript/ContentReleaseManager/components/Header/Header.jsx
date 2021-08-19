@@ -1,11 +1,12 @@
-import {Button, Header, HelpOutline, Add} from '@jahia/moonstone';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {StoreContext} from '../../contexts';
-
+import {Button, Header, HelpOutline, Add, Reload} from '@jahia/moonstone';
+import {triggerRefetch} from '../../actions/refetch';
 const HeaderCmp = props => {
     console.log('HeaderCmp props:', props);
-    const {dispatch} = React.useContext(StoreContext);
+    const {state, dispatch} = React.useContext(StoreContext);
+    const {refetchers} = state;
     const {t} = useTranslation('content-releases');
 
     const handleCreate = () =>
@@ -17,7 +18,9 @@ const HeaderCmp = props => {
         dispatch({
             case: 'TOGGLE_SHOW_DIALOG_HELP'
         });
-    // TODO mettre un refresh button
+
+    const handleRefresh = () => triggerRefetch(refetchers, 'GET_RELEASES');
+
     return (
         <Header
             title={t('label.layout.header.title')}
@@ -34,6 +37,13 @@ const HeaderCmp = props => {
                         size="big"
                         icon={<Add/>}
                         onClick={handleCreate}/>
+            ]}
+            toolbarLeft={[
+                <Button key="tl1"
+                        label={t('label.layout.header.btn.refresh')}
+                        icon={<Reload/>}
+                        variant="ghost"
+                        onClick={handleRefresh}/>
             ]}
         />
     );
