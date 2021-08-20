@@ -35,6 +35,7 @@
         "removeReleaseAction":{
           "title": "Remove content release",
           "cancel": "Cancel",
+          "text": "<p>Remove a content release will only remove it from the list.</p><p>Content associated to this release will not be deleted. However, their last modification date and publication status will be updated</p>",
           "ok": "Remove"
         },
         "help": {

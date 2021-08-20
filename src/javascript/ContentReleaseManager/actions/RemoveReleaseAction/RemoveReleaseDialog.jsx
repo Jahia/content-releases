@@ -14,22 +14,21 @@ import {compose} from '../../utils';
 import {withTranslation} from 'react-i18next';
 import DOMPurify from 'dompurify';
 
-let styles = theme => ({
+let styles = () => ({
     root: {
         minWidth: '600px'
     },
-    error: {
-        color: theme.palette.error.main
+    typography: {
+        '& p': {
+            color: 'var(--color-gray_dark)'
+            // FontSize: "0.875rem"
+        }
     }
 });
 
 const RemoveReleaseDialog = ({classes, t, open, name, handleCancel, handleRemove}) => {
-    let content = `
-        <p>Remove a content release will only remove it from the list.</p>
-        <p>Content associated to this release will not be deleted.
-        However, their last modification date and publication status will be updated</p>`;
-    content = DOMPurify.sanitize(content, {ADD_ATTR: ['target']});
-    console.log('RemoveReleaseDialog content: ', content);
+    const content = DOMPurify.sanitize(t('content-releases:label.layout.dialog.removeReleaseAction.text'), {ADD_ATTR: ['target']});
+    // Console.log('RemoveReleaseDialog content: ', content);
 
     return (
         <Dialog open={open}
@@ -42,6 +41,7 @@ const RemoveReleaseDialog = ({classes, t, open, name, handleCancel, handleRemove
                 {/* <DialogContentText/> */}
 
                 <Typography component="div"
+                            className={classes.typography}
                             dangerouslySetInnerHTML={{__html: content}}/>
 
             </DialogContent>

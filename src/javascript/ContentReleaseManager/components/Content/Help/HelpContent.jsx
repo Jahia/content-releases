@@ -3,10 +3,36 @@ import get from 'lodash.get';
 import {GET_RELEASE_HELP} from './Help.gql-queries';
 import {useQuery} from '@apollo/react-hooks';
 import DOMPurify from 'dompurify';
-// Import {Typography} from '@jahia/moonstone';
 import {Typography} from '@material-ui/core';
+import {withStyles} from '@material-ui/core';
+import PropTypes from 'prop-types';
 
-const HelpContent = () => {
+const styles = () => ({
+    root: {
+        margin: 'auto',
+        '& h1': {
+            fontSize: '1.25rem', // '32px',
+            color: 'var(--color-gray_dark)'
+        },
+        '& h2': {
+            fontSize: '1rem', // '24px',
+            fontWeight: 400,
+            color: 'var(--color-accent)',
+            marginTop: '1rem'
+        },
+        '& p': {
+            color: 'var(--color-gray_dark)'
+            // FontSize: "0.875rem"
+        },
+        '& ol': {
+            listStyle: 'decimal',
+            color: 'var(--color-gray_dark)',
+            marginLeft: '24px'
+        }
+    }
+});
+
+const HelpContent = ({classes}) => {
     const [content, setContent] = React.useState(null);
     const gqlParams = {
         workspace: 'EDIT',
@@ -42,13 +68,15 @@ const HelpContent = () => {
         <>
             {content &&
             <Typography component="div"
+                        className={classes.root}
                         dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(content, {ADD_ATTR: ['target']})}}/>}
 
         </>
     );
 };
 
-// HelpContent.propTypes = {
-// };
+HelpContent.propTypes = {
+    classes: PropTypes.object.isRequired
+};
 
-export default HelpContent;
+export default withStyles(styles)(HelpContent);
