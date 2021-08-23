@@ -13,6 +13,7 @@ export default function () {
         label: 'content-releases:label.appsAccordion.title',
         isSelectable: true,
         requireModuleInstalledOnSite: 'content-releases',
+        requiredPermission: 'contentReleaseManagerAccess',
         render: () => <ContentReleaseManagerCmp/>
     });
     console.debug('%c contentRelease Manager Extensions  is activated', 'color: #3c8cba');

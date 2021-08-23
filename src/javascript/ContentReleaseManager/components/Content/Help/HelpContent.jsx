@@ -4,6 +4,7 @@ import {GET_RELEASE_HELP} from './Help.gql-queries';
 import {useQuery} from '@apollo/react-hooks';
 import DOMPurify from 'dompurify';
 import {Typography} from '@material-ui/core';
+// Import {Typography} from '@jahia/moonstone';
 import {withStyles} from '@material-ui/core';
 import PropTypes from 'prop-types';
 
@@ -58,12 +59,16 @@ const HelpContent = ({classes}) => {
         return <p>Error :(</p>;
     }
 
-    // Console.log('content :', content);
     // <Typography component="div"
-    //             isHtml="true"
+    //             className={classes.root}
+    //             dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(content, {ADD_ATTR: ['target']})}}/>
+    // Console.log('content :', content);
+    // <Typography isHtml
+    //             component="div"
+    //             className={classes.root}
     // >
     //     {DOMPurify.sanitize(content, {ADD_ATTR: ['target']})}
-    // </Typography>}
+    // </Typography>
     return (
         <>
             {content &&
