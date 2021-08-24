@@ -3,8 +3,18 @@ import {registry} from '@jahia/ui-extender';
 import i18next from 'i18next';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import ContentReleaseManagerCmp from './ContentReleaseManager';
+import {GET_RELEASES_ACCESS} from './ContentReleaseManager/ReleasesAccess.gql-queries';
+import get from 'lodash.get';
 
 i18next.loadNamespaces('content-releases');
+
+const userHasPermissionReleaseAccess = async client => {
+    const variables = {
+        permissionName: 'contentReleaseManagerAccess'
+    };
+    const asReleaseAccess = await client.query({query: GET_RELEASES_ACCESS, variables});
+    return asReleaseAccess;
+};
 
 export default function () {
     registry.add('adminRoute', 'contentReleaseManager', {
@@ -18,30 +28,33 @@ export default function () {
     });
     console.debug('%c contentRelease Manager Extensions  is activated', 'color: #3c8cba');
 
-    // Registry.add('callback', 'release-manager', {
-    //     targets: ['jahiaApp-init:30'],
-    //     callback: function () {
-    //         const contentPicker = registry.get('selectorType', 'ContentPicker');
-    //         const releaseNodePickerCmp = {
-    //             picker: contentPicker,
-    //             treeConfigs: [{
-    //                 rootPath: site => `/sites/${site}/releases-manager/releases`,
-    //                 openableTypes: ['jnt:contentFolder'],
-    //                 selectableTypes: ['jnt:contentFolder'],
-    //                 type: 'contents',
-    //                 rootLabelKey: 'content-editor:label.contentEditor.edit.fields.contentPicker.contentsRootLabel'
-    //             }],
-    //             searchSelectorType: 'jnt:release',
-    //             listTypesTable: ['jnt:release'],
-    //             selectableTypesTable: ['jnt:release']
-    //         };
-    //
-    //         console.debug('releaseNodePickerCmp', releaseNodePickerCmp);
-    //
-    //         registry.add('pickerConfiguration', 'releaseNode', {
-    //             cmp: releaseNodePickerCmp
-    //         });
-    //         console.debug('%c releaseNode pickerConfiguration Extensions  is activated', 'color: #3c8cba');
-    //     }
-    // });
+    registry.add('selectorType.onChange', 'hideReleaseChoicelist', {
+        targets: ['Choicelist'],
+        onChange: (previousValue, currentValue, field, editorContext) => {
+            if (field.nodeType !== 'jmix:releaseItem') {
+                return;
+            }
+
+            const {client} = editorContext;
+            let editorSections = editorContext.getSections();
+
+            userHasPermissionReleaseAccess(client).then(response => {
+                const hasPermission = get(response, 'data.currentUser.node.hasPermission', false);
+
+                if (!hasPermission) {
+                    editorSections = editorSections.map(section => {
+                        if (section.name === 'options') {
+                            section = {
+                                ...section,
+                                fieldSets: section.fieldSets.filter(fieldSet => fieldSet.name !== 'jmix:releaseItem')
+                            };
+                        }
+
+                        return section;
+                    });
+                    editorContext.setSections(editorSections);
+                }
+            });
+        }
+    });
 }
