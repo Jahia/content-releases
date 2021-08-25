@@ -4,7 +4,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent, DialogTitle,
-    // DialogContentText,
     withStyles
 } from '@material-ui/core';
 import {Button} from '@jahia/moonstone';
@@ -34,8 +33,6 @@ const ReleaseContentDialog = ({classes, t, open, handleClose, release}) => {
             </DialogTitle>
             <DialogContent>
                 <ReleaseContentDisplay items={release.items}/>
-                {/* <DialogContentText> */}
-                {/* </DialogContentText> */}
             </DialogContent>
             <DialogActions>
                 <Button

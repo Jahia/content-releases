@@ -1,10 +1,11 @@
-<jnt = 'http://www.jahia.org/jahia/nt/1.0'>
 <jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+<jnt = 'http://www.jahia.org/jahia/nt/1.0'>
 
 [jmix:releaseItem] mixin
  extends = jnt:content, jnt:page
  itemtype = options
- - releases (weakreference,choicelist[nodes='$currentSite/releases-manager/releases;jnt:release']) multiple < jnt:release
+ - releases (weakreference, choicelist[nodes='$currentSite/releases-manager/releases;jnt:release']) multiple < 'jnt:release'
 
-[jnt:release] > jnt:content, jmix:editorialContent,jmix:droppableContent
-- name (string)
+[jnt:release] > jnt:content, jmix:droppableContent, jmix:editorialContent
+ - name (string) mandatory primary
+

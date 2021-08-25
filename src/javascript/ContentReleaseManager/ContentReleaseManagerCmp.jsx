@@ -1,9 +1,6 @@
 import React from 'react';
-// Import {ContentLayout} from '@jahia/moonstone-alpha';
-import Header from './components/Header';
-import Content from './components/Content';
-import {withStyles} from '@material-ui/core';
 import PropTypes from 'prop-types';
+import {withStyles} from '@material-ui/core';
 import classnames from 'clsx';
 import get from 'lodash.get';
 import {StoreContext} from './contexts';
@@ -12,8 +9,10 @@ import {GET_RELEASES} from './Releases.gql-queries';
 import CreateReleaseDialogContainer from './actions/CreateReleaseAction/CreateReleaseDialog.container';
 import EditReleaseDialogContainer from './actions/EditReleaseAction/EditReleaseDialog.container';
 import RemoveReleaseDialogContainer from './actions/RemoveReleaseAction/RemoveReleaseDialog.container';
+import Header from './components/Header';
+import Content from './components/Content';
 import Help from './components/Content/Help';
-import ReleaseContent from './components/Content/ReleaseContent';
+// Import ReleaseContent from './components/Content/ReleaseContent';
 
 const styles = () => ({
     root: {
@@ -25,7 +24,6 @@ const styles = () => ({
 });
 const contentType = 'jnt:release';
 const ContentReleaseManagerCmp = props => {
-    console.log('ContentReleaseManagerCmp props:', props);
     const {classes} = props;
     const {state, dispatch} = React.useContext(StoreContext);
 
@@ -76,6 +74,7 @@ const ContentReleaseManagerCmp = props => {
         return <p>Error :(</p>;
     }
 
+    // Note : I tried <ContentLayout/> from moonstone alpha but the layout was not convenient
     return (
         <main className={classnames(
             classes.root,
@@ -93,16 +92,10 @@ const ContentReleaseManagerCmp = props => {
             {releaseToRemove &&
                 <RemoveReleaseDialogContainer/>}
             <Help display="dialog"/>
-            <ReleaseContent/>
+            {/* <ReleaseContent/> */}
         </main>
 
     );
-
-    // Return (
-    //     <ContentLayout
-    //         header={<Header title={t('label.settings.title')}/>}
-    //         content={<div style={{padding: 'var(--spacing-medium)'}}>Super cool ce truc</div>}/>
-    // );
 };
 
 ContentReleaseManagerCmp.propTypes = {

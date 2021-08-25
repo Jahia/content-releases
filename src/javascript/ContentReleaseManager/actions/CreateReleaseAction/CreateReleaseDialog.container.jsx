@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-// Import {CreateFolderQuery} from './CreateReleaseDialog.gql-queries';
-import {CreateReleaseMutation} from './CreateRelease.gql-mutations';
 import PropTypes from 'prop-types';
-import CreateReleaseDialog from './CreateReleaseDialog';
-// Import {triggerRefetchAll} from '../../../JContent.refetches';
 import {useApolloClient, useMutation} from '@apollo/react-hooks';
 import {StoreContext} from '../../contexts';
-// Import get from 'lodash.get';
 import {triggerRefetch} from '../refetch';
+import {CreateReleaseMutation} from './CreateRelease.gql-mutations';
+import CreateReleaseDialog from './CreateReleaseDialog';
 
 const CreateReleaseDialogContainer = ({path, contentType}) => {
     const {state, dispatch} = React.useContext(StoreContext);
@@ -17,7 +14,6 @@ const CreateReleaseDialogContainer = ({path, contentType}) => {
         refetchers
     } = state;
 
-    // Const [open, updateIsDialogOpen] = useState(true);
     const [name, updateName] = useState('');
     const [isNameValid, updateIsNameValid] = useState(true);
     const [isNameAvailable, updateIsNameAvailable] = useState(true);
@@ -43,7 +39,7 @@ const CreateReleaseDialogContainer = ({path, contentType}) => {
         });
 
     const handleCreate = mutation => {
-        // Do mutation to create folder.
+        // Do mutation to create release.
         gqlParams.mutation.releaseName = name;
         gqlParams.mutation.jcrReleaseName = name.toLowerCase().replace(/\s/g, '-').substr(0, 31);
         mutation({variables: gqlParams.mutation});
@@ -54,29 +50,13 @@ const CreateReleaseDialogContainer = ({path, contentType}) => {
     };
 
     const client = useApolloClient();
-    // Const {loading, data} = useQuery(CreateFolderQuery, {variables: gqlParams.query, fetchPolicy: 'network-only'});
     const [mutation] = useMutation(CreateReleaseMutation, {
         onCompleted: () => {
             client.cache.flushNodeEntryByPath(path);
             triggerRefetch(refetchers, 'GET_RELEASES');
         }
-        // Update(cache, result) {
-        //     console.log('mutation update result :', result);
-        //
-        //     dispatch({
-        //         case: 'ADD_NEW_RELEASE',
-        //         payload: {
-        //             releaseData: get(result, 'data.jcr.create.release', {})
-        //         }
-        //     });
-        // }
     });
 
-    // UseEffect(() => {
-    //     if (data && data.jcr && data.jcr.nodeByPath) {
-    //         updateChildNodes(data.jcr.nodeByPath.children.nodes);
-    //     }
-    // }, [data, updateChildNodes]);
     return (
         <CreateReleaseDialog open={showDialogCreateRelease}
                              name={name}
@@ -91,7 +71,6 @@ const CreateReleaseDialogContainer = ({path, contentType}) => {
 CreateReleaseDialogContainer.propTypes = {
     path: PropTypes.string.isRequired,
     contentType: PropTypes.string.isRequired
-    // OnExit: PropTypes.func.isRequired
 };
 
 export default CreateReleaseDialogContainer;

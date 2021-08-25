@@ -11,7 +11,6 @@ const styles = () => ({
         flex: '1 1 0',
         width: '100%',
         minHeight: 0,
-        // Padding: theme.spacing.unit
         padding: 'var(--spacing-medium)'
     },
     main: {
@@ -29,8 +28,6 @@ const styles = () => ({
         order: 2,
         display: 'flex',
         minWidth: 0
-        // Transition: 'margin-left .25s,margin-right .25s',
-        // backgroundColor: '#eff2f4'
     }
 });
 

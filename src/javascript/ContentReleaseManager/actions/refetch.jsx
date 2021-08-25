@@ -1,5 +1,4 @@
 export const triggerRefetch = (refetchers, key) => {
-    console.log('triggerRefetch key : ', key);
     const refetcher = refetchers[key];
     if (!refetcher) {
         return;

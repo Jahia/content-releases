@@ -1,5 +1,4 @@
 import React from 'react';
-// Import PropTypes from 'prop-types';
 import HelpDialog from './HelpDialog';
 import {StoreContext} from '../../../contexts';
 
@@ -19,10 +18,5 @@ const HelpDialogContainer = () => {
                     handleClose={handleClose}/>
     );
 };
-
-// HelpDialogContainer.propTypes = {
-//     path: PropTypes.string.isRequired,
-//     contentType: PropTypes.string.isRequired
-// };
 
 export default HelpDialogContainer;

@@ -3,8 +3,8 @@ import {useTranslation} from 'react-i18next';
 import {StoreContext} from '../../contexts';
 import {Button, Header, HelpOutline, Add, Reload} from '@jahia/moonstone';
 import {triggerRefetch} from '../../actions/refetch';
-const HeaderCmp = props => {
-    console.log('HeaderCmp props:', props);
+
+const HeaderCmp = () => {
     const {state, dispatch} = React.useContext(StoreContext);
     const {refetchers} = state;
     const {t} = useTranslation('content-releases');

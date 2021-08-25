@@ -1,0 +1,54 @@
+{
+  "label": {
+    "layout": {
+      "header": {
+        "title": "Gestionnaire de version",
+        "btn": {
+          "create": "Ajouter une version",
+          "refresh": "Rafraichir"
+        }
+      },
+      "content": {
+        "table": {
+          "header": {
+            "name": "Nom de la version",
+            "items": "Nombre de contenu",
+            "actions": "Actions"
+          }
+        }
+      },
+      "dialog": {
+        "createReleaseAction":{
+          "title": "Créer une nouvelle version",
+          "text": "Saisir un nom de version",
+          "exists": "Le nom de la version doit être unique par site",
+          "cancel": "Annuler",
+          "ok": "Créer"
+        },
+        "updateReleaseAction":{
+          "title": "Mettre à jour la version",
+          "text": "Saisir un nom de version",
+          "exists": "Le nom de la version doit être unique par site",
+          "cancel": "Annuler",
+          "ok": "Mettre à jour"
+        },
+        "removeReleaseAction":{
+          "title": "Supprimer la version",
+          "cancel": "Annuler",
+          "text": "<p>Remove a content release will only remove it from the list.</p><p>Content associated to this release will not be deleted. However, their last modification date and publication status will be updated</p>",
+          "ok": "Supprimer"
+        },
+        "help": {
+          "close": "Fermer"
+        }
+      }
+    },
+    "action": {
+      "edit": "Editer",
+      "delete": "Supprimer"
+    },
+    "appsAccordion": {
+      "title": "Gestionnaire de version"
+    }
+  }
+}

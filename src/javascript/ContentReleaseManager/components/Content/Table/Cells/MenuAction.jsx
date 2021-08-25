@@ -1,18 +1,18 @@
 import React from 'react';
-// Import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {Button, MoreVert, Menu, MenuItem, Edit, Delete} from '@jahia/moonstone';
 import {useTranslation} from 'react-i18next';
-import PropTypes from 'prop-types';
 import {StoreContext} from '../../../../contexts';
+import {withStyles} from '@material-ui/core';
 
-// Let styles = () => ({
-//     delete: {
-//         color: 'var(--color-danger)'
-//     }
-// });
+const styles = () => ({
+    delete: {
+        color: 'var(--color-danger)'
+    }
+});
 
 const MenuAction = props => {
-    const {release} = props;
+    const {release, classes} = props;
     const {dispatch} = React.useContext(StoreContext);
 
     const [isDisplayed, setIsDisplayed] = React.useState(false);
@@ -73,7 +73,8 @@ const MenuAction = props => {
                           onClick={handleEditClick}
                 />
                 <MenuItem iconStart={<Delete/>}
-                          style={{color: 'var(--color-danger)'}}
+                          // Style={{color: 'var(--color-danger)'}}
+                          className={classes.delete}
                           label={t('label.action.delete')}
                           onClick={handleDeleteClick}
                 />
@@ -83,7 +84,7 @@ const MenuAction = props => {
 };
 
 MenuAction.propTypes = {
-    // Classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
     release: PropTypes.object.isRequired
 };
-export default MenuAction;
+export default withStyles(styles)(MenuAction);

@@ -1,5 +1,4 @@
 import {gql} from 'apollo-boost';
-// Import {PredefinedFragments} from '@jahia/data-helper';
 
 export const GET_RELEASE_HELP = gql`
     query getReleaseHelpContent($workspace: Workspace!, $path: String!, $language: String!) {
@@ -13,6 +12,4 @@ export const GET_RELEASE_HELP = gql`
         }
     }
 `;
-//    ${PredefinedFragments.nodeCacheRequiredFields.gql}
-// ${propsFragment}
 

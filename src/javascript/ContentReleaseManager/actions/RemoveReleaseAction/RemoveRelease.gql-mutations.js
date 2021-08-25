@@ -1,5 +1,6 @@
 import {gql} from 'apollo-boost';
 
+// Note : waiting 8.1 -> https://jira.jahia.org/browse/BACKLOG-16351
 const RemoveReleaseMutation = gql`
     mutation EditReleaseProperties(
         $uuid:String!,

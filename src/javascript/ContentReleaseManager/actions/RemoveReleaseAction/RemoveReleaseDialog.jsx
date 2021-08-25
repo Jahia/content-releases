@@ -4,7 +4,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    // DialogContentText,
     DialogTitle,
     withStyles
 } from '@material-ui/core';
@@ -27,9 +26,9 @@ let styles = () => ({
 });
 
 const RemoveReleaseDialog = ({classes, t, open, name, handleCancel, handleRemove}) => {
-    const content = DOMPurify.sanitize(t('content-releases:label.layout.dialog.removeReleaseAction.text'), {ADD_ATTR: ['target']});
-    // Console.log('RemoveReleaseDialog content: ', content);
-
+    const content = DOMPurify.sanitize(
+        t('content-releases:label.layout.dialog.removeReleaseAction.text'), {ADD_ATTR: ['target']}
+    );
     return (
         <Dialog open={open}
                 aria-labelledby="form-dialog-title"
@@ -38,27 +37,22 @@ const RemoveReleaseDialog = ({classes, t, open, name, handleCancel, handleRemove
         >
             <DialogTitle id="form-dialog-title">{t('content-releases:label.layout.dialog.removeReleaseAction.title') + ': ' + name}</DialogTitle>
             <DialogContent>
-                {/* <DialogContentText/> */}
-
                 <Typography component="div"
                             className={classes.typography}
                             dangerouslySetInnerHTML={{__html: content}}/>
-
             </DialogContent>
             <DialogActions>
                 <Button
                     size="big"
                     data-cm-role="create-release-as-cancel"
                     label={t('content-releases:label.layout.dialog.removeReleaseAction.cancel')}
-                    onClick={handleCancel}
-                />
+                    onClick={handleCancel}/>
                 <Button
                     color="danger"
                     size="big"
                     data-cm-role="create-release-as-confirm"
                     label={t('content-releases:label.layout.dialog.removeReleaseAction.ok')}
-                    onClick={handleRemove}
-                />
+                    onClick={handleRemove}/>
             </DialogActions>
         </Dialog>
     );

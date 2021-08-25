@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-// Import {CreateFolderQuery} from './CreateReleaseDialog.gql-queries';
 import {EditReleaseMutation} from './EditRelease.gql-mutations';
-// Import PropTypes from 'prop-types';
 // NOTE reuse the same dialog than the one to create ?
 import EditReleaseDialog from './EditReleaseDialog';
 import {useApolloClient, useMutation} from '@apollo/react-hooks';
@@ -45,7 +43,7 @@ const EditReleaseDialogContainer = () => {
         });
 
     const handleUpdate = mutation => {
-        // Do mutation to create folder.
+        // Do mutation to update release.
         gqlParams.mutation.releaseName = name;
         gqlParams.mutation.jcrReleaseName = name.toLowerCase().replace(/\s/g, '-').substr(0, 31);
         mutation({variables: gqlParams.mutation});
@@ -56,34 +54,16 @@ const EditReleaseDialogContainer = () => {
                 release: null
             }
         });
-        // UpdateIsDialogOpen(false);
-        // onExit();
     };
 
     const client = useApolloClient();
-    // Const {loading, data} = useQuery(CreateFolderQuery, {variables: gqlParams.query, fetchPolicy: 'network-only'});
     const [mutation] = useMutation(EditReleaseMutation, {
         onCompleted: () => {
             client.cache.flushNodeEntryById(releaseToUpdate.id);
             triggerRefetch(refetchers, 'GET_RELEASES');
         }
-        // Update(cache, result) {
-        //     console.log('mutation update result :', result);
-        //
-        //     dispatch({
-        //         case: 'ADD_UPDATED_RELEASE',
-        //         payload: {
-        //             releaseData: get(result, 'data.jcr.update.release', {})
-        //         }
-        //     });
-        // }
     });
 
-    // UseEffect(() => {
-    //     if (data && data.jcr && data.jcr.nodeByPath) {
-    //         updateChildNodes(data.jcr.nodeByPath.children.nodes);
-    //     }
-    // }, [data, updateChildNodes]);
     return (
         <EditReleaseDialog open={showDialogEditRelease}
                            name={name}
@@ -95,10 +75,5 @@ const EditReleaseDialogContainer = () => {
                            onChangeName={onChangeName}/>
     );
 };
-
-// EditReleaseDialogContainer.propTypes = {
-//     uuid: PropTypes.string.isRequired,
-//     currentName: PropTypes.string.isRequired
-// };
 
 export default EditReleaseDialogContainer;

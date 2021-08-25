@@ -4,7 +4,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    // DialogContentText,
     withStyles
 } from '@material-ui/core';
 import {Button} from '@jahia/moonstone';
@@ -29,8 +28,6 @@ const HelpDialog = ({classes, t, open, handleClose}) => {
         >
             <DialogContent>
                 <HelpContent/>
-                {/* <DialogContentText> */}
-                {/* </DialogContentText> */}
             </DialogContent>
             <DialogActions>
                 <Button

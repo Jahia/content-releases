@@ -1,7 +1,7 @@
 import React from 'react';
 import {registry} from '@jahia/ui-extender';
 import i18next from 'i18next';
-import NewReleasesIcon from '@material-ui/icons/NewReleases';
+import {Rocket} from '@jahia/moonstone';
 import ContentReleaseManagerCmp from './ContentReleaseManager';
 import {GET_RELEASES_ACCESS} from './ContentReleaseManager/ReleasesAccess.gql-queries';
 import get from 'lodash.get';
@@ -19,7 +19,7 @@ const userHasPermissionReleaseAccess = async client => {
 export default function () {
     registry.add('adminRoute', 'contentReleaseManager', {
         targets: ['jcontent:50'],
-        icon: <NewReleasesIcon fontSize="small"/>,
+        icon: <Rocket/>,
         label: 'content-releases:label.appsAccordion.title',
         isSelectable: true,
         requireModuleInstalledOnSite: 'content-releases',
@@ -35,6 +35,7 @@ export default function () {
                 return;
             }
 
+            console.log('field : ', field);
             const {client} = editorContext;
             let editorSections = editorContext.getSections();
 

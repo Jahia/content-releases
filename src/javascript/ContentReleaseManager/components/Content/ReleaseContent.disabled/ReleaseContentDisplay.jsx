@@ -71,8 +71,6 @@ const ReleaseContentDisplay = props => {
         // },
         {Header: 'Name', accessor: 'name'},
         {Header: 'Type', accessor: 'type', customWidth: columnsWidth.type}
-        // {Header: 'Created By', accessor: 'createdBy', customWidth: columnsWidth.createdBy},
-        // {Header: 'Last Modified On', accessor: 'lastModifiedOn', customWidth: columnsWidth.lastModifiedOn}
     ], []);
 
     const {
