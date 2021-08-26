@@ -10,7 +10,7 @@ import ReleaseName from './Cells/ReleaseName';
 
 const columnsWidth = {
     actions: '120px',
-    items: '180px'
+    items: '200px'
 };
 
 const styles = () => ({

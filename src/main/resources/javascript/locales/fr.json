@@ -2,40 +2,40 @@
   "label": {
     "layout": {
       "header": {
-        "title": "Gestionnaire de releases",
+        "title": "Gestionnaire de livraisons",
         "btn": {
-          "create": "Ajouter une release",
+          "create": "Ajouter une livraison",
           "refresh": "Rafraîchir"
         }
       },
       "content": {
         "table": {
           "header": {
-            "name": "Nom de la release",
-            "items": "Nombre de contenu",
+            "name": "Nom de la livraison",
+            "items": "Nombre de contenus",
             "actions": "Actions"
           }
         }
       },
       "dialog": {
         "createReleaseAction":{
-          "title": "Créer une nouvelle release",
-          "text": "Saisir un nom de release",
-          "exists": "Le nom de la release doit être unique par site",
+          "title": "Créer une nouvelle livraison",
+          "text": "Saisir un nom de livraison",
+          "exists": "Le nom de la livraison doit être unique par site",
           "cancel": "Annuler",
           "ok": "Créer"
         },
         "updateReleaseAction":{
-          "title": "Mettre à jour la release",
-          "text": "Saisir un nom de release",
-          "exists": "Le nom de la release doit être unique par site",
+          "title": "Mettre à jour la livraison",
+          "text": "Saisir un nom de livraison",
+          "exists": "Le nom de la livraison doit être unique par site",
           "cancel": "Annuler",
           "ok": "Mettre à jour"
         },
         "removeReleaseAction":{
-          "title": "Supprimer la release",
+          "title": "Supprimer la livraison",
           "cancel": "Annuler",
-          "text": "<p>Supprimer une release ne fait que la supprimer de la liste</p><p>Aussi, les contenus assocés à cette release ne sont pas supprimés. Cependant, leur date de dernière modification et leur statut de publication seront mis à jour.</p>",
+          "text": "<p>Supprimer une livraison ne fait que la supprimer de la liste</p><p>Aussi, les contenus assocés à cette livraison ne sont pas supprimés. Cependant, leur date de dernière modification et leur statut de publication seront mis à jour.</p>",
           "ok": "Supprimer"
         },
         "help": {
@@ -48,7 +48,7 @@
       "delete": "Supprimer"
     },
     "appsAccordion": {
-      "title": "Gestionnaire de releases"
+      "title": "Gestionnaire de livraisons"
     }
   }
 }

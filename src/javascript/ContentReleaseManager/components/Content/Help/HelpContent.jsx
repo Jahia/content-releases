@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 const styles = () => ({
     root: {
         margin: 'auto',
+        maxWidth: '600px',
         '& h1': {
             fontSize: '1.25rem',
             color: 'var(--color-gray_dark)'
