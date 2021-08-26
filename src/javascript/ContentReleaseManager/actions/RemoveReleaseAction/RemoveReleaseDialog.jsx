@@ -22,6 +22,9 @@ let styles = () => ({
             color: 'var(--color-gray_dark)'
             // FontSize: "0.875rem"
         }
+    },
+    small: {
+        fontSize: '0.75rem'
     }
 });
 
@@ -35,7 +38,9 @@ const RemoveReleaseDialog = ({classes, t, open, name, handleCancel, handleRemove
                 classes={{paper: classes.root}}
                 onClose={handleCancel}
         >
-            <DialogTitle id="form-dialog-title">{t('content-releases:label.layout.dialog.removeReleaseAction.title') + ': ' + name}</DialogTitle>
+            <DialogTitle id="form-dialog-title">{t('content-releases:label.layout.dialog.removeReleaseAction.title')}
+                <span className={classes.small}>&nbsp;[{name}]</span>
+            </DialogTitle>
             <DialogContent>
                 <Typography component="div"
                             className={classes.typography}

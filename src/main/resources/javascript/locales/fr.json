@@ -2,16 +2,16 @@
   "label": {
     "layout": {
       "header": {
-        "title": "Gestionnaire de version",
+        "title": "Gestionnaire de releases",
         "btn": {
-          "create": "Ajouter une version",
-          "refresh": "Rafraichir"
+          "create": "Ajouter une release",
+          "refresh": "Rafraîchir"
         }
       },
       "content": {
         "table": {
           "header": {
-            "name": "Nom de la version",
+            "name": "Nom de la release",
             "items": "Nombre de contenu",
             "actions": "Actions"
           }
@@ -19,23 +19,23 @@
       },
       "dialog": {
         "createReleaseAction":{
-          "title": "Créer une nouvelle version",
-          "text": "Saisir un nom de version",
-          "exists": "Le nom de la version doit être unique par site",
+          "title": "Créer une nouvelle release",
+          "text": "Saisir un nom de release",
+          "exists": "Le nom de la release doit être unique par site",
           "cancel": "Annuler",
           "ok": "Créer"
         },
         "updateReleaseAction":{
-          "title": "Mettre à jour la version",
-          "text": "Saisir un nom de version",
-          "exists": "Le nom de la version doit être unique par site",
+          "title": "Mettre à jour la release",
+          "text": "Saisir un nom de release",
+          "exists": "Le nom de la release doit être unique par site",
           "cancel": "Annuler",
           "ok": "Mettre à jour"
         },
         "removeReleaseAction":{
-          "title": "Supprimer la version",
+          "title": "Supprimer la release",
           "cancel": "Annuler",
-          "text": "<p>Remove a content release will only remove it from the list.</p><p>Content associated to this release will not be deleted. However, their last modification date and publication status will be updated</p>",
+          "text": "<p>Supprimer une release ne fait que la supprimer de la liste</p><p>Aussi, les contenus assocés à cette release ne sont pas supprimés. Cependant, leur date de dernière modification et leur statut de publication seront mis à jour.</p>",
           "ok": "Supprimer"
         },
         "help": {
@@ -48,7 +48,7 @@
       "delete": "Supprimer"
     },
     "appsAccordion": {
-      "title": "Gestionnaire de version"
+      "title": "Gestionnaire de releases"
     }
   }
 }

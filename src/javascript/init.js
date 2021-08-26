@@ -35,7 +35,6 @@ export default function () {
                 return;
             }
 
-            console.log('field : ', field);
             const {client} = editorContext;
             let editorSections = editorContext.getSections();
 

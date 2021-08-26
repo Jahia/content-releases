@@ -6,6 +6,11 @@
  itemtype = options
  - releases (weakreference, choicelist[nodes='$currentSite/releases-manager/releases;jnt:release']) multiple < 'jnt:release'
 
-[jnt:release] > jnt:content, jmix:droppableContent
+[jnt:releaseFolder] > nt:base, jmix:nolive
+ + * (jnt:release)
+ + * (jnt:releaseFolder)
+ + * (jnt:bigText)
+
+[jnt:release] > nt:base, jmix:nolive
  - name (string) mandatory primary
 
