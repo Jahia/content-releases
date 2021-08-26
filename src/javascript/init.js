@@ -10,7 +10,7 @@ i18next.loadNamespaces('content-releases');
 
 const userHasPermissionReleaseAccess = async client => {
     const variables = {
-        permissionName: 'contentReleaseManagerAccess'
+        permissionName: 'contentReleaseManager'
     };
     const asReleaseAccess = await client.query({query: GET_RELEASES_ACCESS, variables});
     return asReleaseAccess;
@@ -23,7 +23,7 @@ export default function () {
         label: 'content-releases:label.appsAccordion.title',
         isSelectable: true,
         requireModuleInstalledOnSite: 'content-releases',
-        requiredPermission: 'contentReleaseManagerAccess',
+        requiredPermission: 'contentReleaseManager',
         render: () => <ContentReleaseManagerCmp/>
     });
     console.debug('%c contentRelease Manager Extensions  is activated', 'color: #3c8cba');
