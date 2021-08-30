@@ -9,12 +9,23 @@ import {
 import {Button} from '@jahia/moonstone';
 import {compose} from '../../../utils';
 import {withTranslation} from 'react-i18next';
-import ReleaseContentDisplay from './ReleaseContentDisplay';
+// Import ReleaseContentDisplay from './ReleaseContentDisplay';
+import ReleaseContentIframe from './ReleaseContentIframe';
 
 let styles = theme => ({
     root: {
-        minWidth: '800px',
-        width: '60%'
+        minWidth: '80%',
+        minHeight: '80%'
+        // Width: '60%'
+    },
+    title: {
+        backgroundColor: 'var(--color-gray_light)',
+        '& span': {
+            fontSize: '1rem'
+        }
+    },
+    content: {
+        padding: 0
     },
     error: {
         color: theme.palette.error.main
@@ -28,11 +39,12 @@ const ReleaseContentDialog = ({classes, t, open, handleClose, release}) => {
                 classes={{paper: classes.root}}
                 onClose={handleClose}
         >
-            <DialogTitle id="releaseContent-dialog-title">
-                {release.name}
+            <DialogTitle id="releaseContent-dialog-title" className={classes.title}>
+                {t('content-releases:label.layout.header.title')}&nbsp;:
+                <span>&nbsp;{release.name}</span>
             </DialogTitle>
-            <DialogContent>
-                <ReleaseContentDisplay items={release.items}/>
+            <DialogContent className={classes.content}>
+                <ReleaseContentIframe releaseId={release.id}/>
             </DialogContent>
             <DialogActions>
                 <Button

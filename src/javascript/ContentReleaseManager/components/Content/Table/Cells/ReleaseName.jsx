@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {IconTextIcon, Rocket} from '@jahia/moonstone';
 import {withStyles} from '@material-ui/core';
+import {StoreContext} from '../../../../contexts';
 
 const styles = () => ({
     clickable: {
@@ -14,20 +15,21 @@ const styles = () => ({
 
 const ReleaseName = props => {
     const {classes, release} = props;
+    const {dispatch} = React.useContext(StoreContext);
 
     const handleClick = () => {
-        const {urlbase, siteKey, lang} = window.contextJsParameters;
-        const searchType = 'jmix:releaseItem';
-        const query = `params=(searchPath:/sites/${siteKey},sql2SearchFrom:'${searchType}',sql2SearchWhere:'releases+=!'${release.id}!'')`;
-        const url = `${urlbase}/jcontent/${siteKey}/${lang}/sql2Search/sites/${siteKey}/home?${query}`;
-        window.open(url, '_blank');
+        // Const {urlbase, siteKey, lang} = window.contextJsParameters;
+        // const searchType = 'jmix:releaseItem';
+        // const query = `params=(searchPath:/sites/${siteKey},sql2SearchFrom:'${searchType}',sql2SearchWhere:'releases+=!'${release.id}!'')`;
+        // const url = `${urlbase}/jcontent/${siteKey}/${lang}/sql2Search/sites/${siteKey}/home?${query}`;
+        // window.open(url, '_blank');
 
-        // Dispatch({
-        //     case: 'TOGGLE_SHOW_DIALOG_RELEASE_CONTENT',
-        //     payload: {
-        //         release
-        //     }
-        // });
+        dispatch({
+            case: 'TOGGLE_SHOW_DIALOG_RELEASE_CONTENT',
+            payload: {
+                release
+            }
+        });
     };
 
     const getDisplay = () => {

@@ -89,16 +89,16 @@ const reducer = (state, action) => {
         }
 
         // Disabled
-        // case 'TOGGLE_SHOW_DIALOG_RELEASE_CONTENT': {
-        //     const {release} = payload;
-        //     console.debug('[STORE] TOGGLE_SHOW_DIALOG_RELEASE_CONTENT - release ', release);
-        //
-        //     return {
-        //         ...state,
-        //         releaseToShow: release || null,
-        //         showDialogReleaseContent: !state.showDialogReleaseContent
-        //     };
-        // }
+        case 'TOGGLE_SHOW_DIALOG_RELEASE_CONTENT': {
+            const {release} = payload;
+            console.debug('[STORE] TOGGLE_SHOW_DIALOG_RELEASE_CONTENT - release ', release);
+
+            return {
+                ...state,
+                releaseToShow: release || null,
+                showDialogReleaseContent: !state.showDialogReleaseContent
+            };
+        }
 
         case 'ADD_NEW_RELEASE': {
             const {releaseData} = payload;

@@ -12,7 +12,7 @@ import RemoveReleaseDialogContainer from './actions/RemoveReleaseAction/RemoveRe
 import Header from './components/Header';
 import Content from './components/Content';
 import Help from './components/Content/Help';
-// Import ReleaseContent from './components/Content/ReleaseContent';
+import ReleaseContent from './components/Content/ReleaseContent';
 
 const styles = () => ({
     root: {
@@ -92,7 +92,7 @@ const ContentReleaseManagerCmp = props => {
             {releaseToRemove &&
                 <RemoveReleaseDialogContainer/>}
             <Help display="dialog"/>
-            {/* <ReleaseContent/> */}
+            <ReleaseContent/>
         </main>
 
     );

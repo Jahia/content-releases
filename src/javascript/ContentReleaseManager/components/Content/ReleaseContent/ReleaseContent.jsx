@@ -11,7 +11,10 @@ const ReleaseContent = () => {
 
     const handleClose = () =>
         dispatch({
-            case: 'TOGGLE_SHOW_DIALOG_RELEASE_CONTENT'
+            case: 'TOGGLE_SHOW_DIALOG_RELEASE_CONTENT',
+            payload: {
+                release: null
+            }
         });
 
     return (
