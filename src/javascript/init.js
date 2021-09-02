@@ -9,7 +9,10 @@ import get from 'lodash.get';
 i18next.loadNamespaces('content-releases');
 
 const userHasPermissionReleaseAccess = async client => {
+    const {siteUuid} = window.contextJsParameters;
     const variables = {
+        workspace: 'EDIT',
+        id: siteUuid,
         permissionName: 'contentReleaseManager'
     };
     const asReleaseAccess = await client.query({query: GET_RELEASES_ACCESS, variables});
@@ -39,7 +42,7 @@ export default function () {
             let editorSections = editorContext.getSections();
 
             userHasPermissionReleaseAccess(client).then(response => {
-                const hasPermission = get(response, 'data.currentUser.node.hasPermission', false);
+                const hasPermission = get(response, 'data.response.siteNode.hasPermission', false);
 
                 if (!hasPermission) {
                     editorSections = editorSections.map(section => {

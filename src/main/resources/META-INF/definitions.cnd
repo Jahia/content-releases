@@ -11,6 +11,6 @@
  + * (jnt:releaseFolder)
  + * (jnt:bigText)
 
-[jnt:release] > nt:base, jmix:nolive
+[jnt:release] > nt:base, jmix:nolive, mix:created, mix:lastModified
  - name (string) mandatory primary
 
