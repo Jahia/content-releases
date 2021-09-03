@@ -15,7 +15,7 @@ const RemoveReleaseMutation = gql`
                     removeValue(value:$uuid,type:WEAKREFERENCE)
                 }
             }
-#            delete: deleteNode(pathOrId:$uuid)
+            delete: deleteNode(pathOrId:$uuid)
         }
     }
 `;

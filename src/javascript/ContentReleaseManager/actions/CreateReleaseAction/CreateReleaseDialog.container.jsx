@@ -43,7 +43,7 @@ const CreateReleaseDialogContainer = ({path, contentType}) => {
         gqlParams.mutation.releaseName = name;
         gqlParams.mutation.jcrReleaseName = name.toLowerCase().replace(/\s/g, '-').substr(0, 31);
         mutation({variables: gqlParams.mutation});
-
+        updateName('');
         dispatch({
             case: 'TOGGLE_SHOW_DIALOG_CREATE'
         });
