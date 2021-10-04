@@ -6,20 +6,19 @@ import ContentReleaseManagerCmp from './ContentReleaseManager';
 import {GET_RELEASES_ACCESS} from './ContentReleaseManager/ReleasesAccess.gql-queries';
 import get from 'lodash.get';
 
-i18next.loadNamespaces('content-releases');
-
-const userHasPermissionReleaseAccess = async client => {
+const userHasPermissionReleaseAccess = client => {
     const {siteUuid} = window.contextJsParameters;
     const variables = {
         workspace: 'EDIT',
         id: siteUuid,
         permissionName: 'contentReleaseManager'
     };
-    const asReleaseAccess = await client.query({query: GET_RELEASES_ACCESS, variables});
-    return asReleaseAccess;
+    return client.query({query: GET_RELEASES_ACCESS, variables});
 };
 
 export default function () {
+    i18next.loadNamespaces('content-releases');
+
     registry.add('adminRoute', 'contentReleaseManager', {
         targets: ['jcontent:50'],
         icon: <Rocket/>,
