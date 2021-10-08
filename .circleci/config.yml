@@ -108,17 +108,6 @@ workflows:
             branches:
               only:
                 - << pipeline.parameters.PRIMARY_RELEASE_BRANCH >>
-      - jahia-modules-orb/integration-tests:
-          name: "Int. Tests - Jahia Latest - Built modules"
-          requires:
-            - jahia-modules-orb/build
-          context: QA_ENVIRONMENT
-          jahia_image: << pipeline.parameters.JAHIA_IMAGE >>
-          tests_manifest: provisioning-manifest-build.yml
-          module_id: << pipeline.parameters.MODULE_ID >>
-          testrail_project: << pipeline.parameters.TESTRAIL_PROJECTNAME >>
-          testrail_milestone: << pipeline.parameters.TESTRAIL_MILESTONE >>
-          should_skip_zencrepes: << pipeline.parameters.SHOULD_SKIP_ZENCREPES >>
 
   # The on-release workflow was created to handle the full release lifecycle after creating a release using GitHub
   # https://github.com/Jahia/content-releases/releases
@@ -202,21 +191,3 @@ workflows:
             - jahia-modules-orb/update-signature-prestep
           ssh_key_fingerprints:  << pipeline.parameters.SSH_KEY_FINGERPRINT >>
 
-  # The manual-run workflow was created to allow the triggering of an integration testing run using CircleCI pipeline API
-  manual-run:
-    when: << pipeline.parameters.IS_MANUAL_TESTRUN >>
-    jobs:
-      - jahia-modules-orb/initialize
-      - jahia-modules-orb/integration-tests:
-          context: QA_ENVIRONMENT
-          requires:
-            - jahia-modules-orb/initialize
-          jahia_image: << pipeline.parameters.JAHIA_IMAGE >>
-          tests_manifest: << pipeline.parameters.TESTS_MANIFEST >>
-          module_id: << pipeline.parameters.MODULE_ID >>
-          testrail_project: << pipeline.parameters.TESTRAIL_PROJECTNAME >>
-          testrail_milestone: << pipeline.parameters.TESTRAIL_MILESTONE >>
-          should_skip_artifacts: << pipeline.parameters.SHOULD_SKIP_ARTIFACTS >>
-          should_skip_testrail: << pipeline.parameters.SHOULD_SKIP_TESTRAIL >>
-          should_skip_notifications: << pipeline.parameters.SHOULD_SKIP_NOTIFICATIONS >>
-          should_skip_zencrepes: << pipeline.parameters.SHOULD_SKIP_ZENCREPES >>
