@@ -1,6 +1,7 @@
 {
   "extends": "@jahia",
-  "plugins": [
-    "json"
-  ]
+  "rules": {
+    "react/no-danger": "off",
+    "react/boolean-prop-naming": "off"
+  }
 }
