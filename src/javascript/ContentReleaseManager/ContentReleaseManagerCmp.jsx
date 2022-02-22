@@ -22,7 +22,7 @@ const styles = () => ({
         backgroundColor: 'var(--color-gray_light)'
     }
 });
-const contentType = 'jnt:release';
+const contentType = 'releasent:release';
 const ContentReleaseManagerCmp = props => {
     const {classes} = props;
     const {state, dispatch} = React.useContext(StoreContext);

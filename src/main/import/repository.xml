@@ -13,7 +13,7 @@
             <files jcr:primaryType="jnt:folder"/>
             <contents jcr:primaryType="jnt:contentFolder"/>
          </templates>
-         <releases-manager jcr:primaryType="jnt:releaseFolder">
+         <releases-manager jcr:primaryType="releasent:releaseFolder">
             <help jcr:primaryType="jnt:bigText">
                <j:translation_en jcr:language="en"
                                  jcr:primaryType="jnt:translation"
@@ -37,7 +37,7 @@
                                     jcr:primaryType="jnt:translation"
                                     text="&lt;h1&gt;How to use content release?&lt;/h1&gt;&#xA;&#xA;&lt;h2&gt;Create a new release&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;The release are available per site, and can also be created/removed when editing the site node with Content Editor.&lt;br /&gt;&#xA;The user needs to have the write permission on the site node in order to create a new release.&lt;/p&gt;&#xA;&#xA;&lt;h2&gt;Assign a page or a content item to a release&lt;/h2&gt;&#xA;&#xA;&lt;ol&gt;&#xA; &lt;li&gt;Simply open Content Editor for the page content&lt;/li&gt;&#xA; &lt;li&gt;Scroll to the &amp;quot;Options&amp;quot; section&lt;/li&gt;&#xA; &lt;li&gt;Enable the &amp;quot;Content release&amp;quot; option&lt;/li&gt;&#xA; &lt;li&gt;Select the previously created release&lt;/li&gt;&#xA; &lt;li&gt;Click Save&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&#xA;&lt;h2&gt;See the related contents&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;It opens in a new tab the list of contents marked for the release, you can then easily access all the contents for your release.&lt;br /&gt;&#xA;Use the preview (right click -&amp;gt; &amp;quot;Preview&amp;quot;) to preview the contents in jContent.&lt;br /&gt;&#xA;Don&amp;#39;t hesitate to use the &amp;quot;Open in Page Composer&amp;quot; option in the context menu of each entry to open the content in Page Composer.&lt;/p&gt;&#xA;&#xA;&lt;p&gt;From jContent, you can select all your content and publish them all at once or schedule their publication if you are using the Scheduled Publication Workflow.&lt;/p&gt;&#xA;&#xA;&lt;p&gt;Please note that if &amp;quot;edit permissions&amp;quot; are not consistent accross all the content, then several workflows will be started.&lt;/p&gt;&#xA;&#xA;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&#xA;"/>
             </help>
-            <releases jcr:primaryType="jnt:releaseFolder"/>
+            <releases jcr:primaryType="releasent:releaseFolder"/>
          </releases-manager>
       </content-releases>
    </modules>
