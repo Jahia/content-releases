@@ -33,7 +33,7 @@ export default function () {
     registry.add('selectorType.onChange', 'hideReleaseChoicelist', {
         targets: ['Choicelist'],
         onChange: (previousValue, currentValue, field, editorContext) => {
-            if (field.nodeType !== 'jmix:releaseItem') {
+            if (field.nodeType !== 'releasemix:releaseItem') {
                 return;
             }
 
@@ -48,7 +48,7 @@ export default function () {
                         if (section.name === 'options') {
                             section = {
                                 ...section,
-                                fieldSets: section.fieldSets.filter(fieldSet => fieldSet.name !== 'jmix:releaseItem')
+                                fieldSets: section.fieldSets.filter(fieldSet => fieldSet.name !== 'releasemix:releaseItem')
                             };
                         }
 

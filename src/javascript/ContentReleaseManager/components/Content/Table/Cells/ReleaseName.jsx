@@ -17,7 +17,7 @@ const ReleaseName = props => {
 
     const handleClick = () => {
         const {urlbase, siteKey, lang} = window.contextJsParameters;
-        const searchType = 'jmix:releaseItem';
+        const searchType = 'releasemix:releaseItem';
         const query = `params=(searchPath:/sites/${siteKey},sql2SearchFrom:'${searchType}',sql2SearchWhere:'releases+=!'${release.id}!'')`;
         const url = `${urlbase}/jcontent/${siteKey}/${lang}/sql2Search/sites/${siteKey}/home?${query}`;
         window.open(url, '_blank');

@@ -25,7 +25,7 @@ const RemoveReleaseDialogContainer = () => {
         mutation({
             variables: {
                 uuid: releaseToRemove.id,
-                query: `SELECT * FROM [jmix:releaseItem] where releases = '${releaseToRemove.id}'`
+                query: `SELECT * FROM [releasemix:releaseItem] where releases = '${releaseToRemove.id}'`
             }
         });
 
