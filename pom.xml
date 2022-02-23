@@ -17,8 +17,8 @@
         <connection>scm:git:git@github.com:Jahia/content-releases.git</connection>
         <developerConnection>scm:git:git@github.com:Jahia/content-releases.git</developerConnection>
         <url>https://github.com/Jahia/content-releases</url>
-      <tag>content-releases-1.0.0</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <yarn.arguments>build:production</yarn.arguments>
