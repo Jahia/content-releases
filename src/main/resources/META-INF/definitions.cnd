@@ -1,16 +1,18 @@
 <jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+<releasemix = 'http://www.jahia.org/release/mix/1.0'>
 <jnt = 'http://www.jahia.org/jahia/nt/1.0'>
+<releasent = 'http://www.jahia.org/release/nt/1.0'>
 
-[jmix:releaseItem] mixin
+[releasemix:releaseItem] mixin
  extends = jnt:content, jnt:page
  itemtype = options
- - releases (weakreference, choicelist[nodes='$currentSite/releases-manager/releases;jnt:release']) multiple < 'jnt:release'
+ - releases (weakreference, choicelist[nodes='$currentSite/releases-manager/releases;releasent:release']) multiple < 'releasent:release'
 
-[jnt:releaseFolder] > nt:base, jmix:nolive
- + * (jnt:release)
- + * (jnt:releaseFolder)
+[releasent:releaseFolder] > nt:base, jmix:nolive
+ + * (releasent:release)
+ + * (releasent:releaseFolder)
  + * (jnt:bigText)
 
-[jnt:release] > nt:base, jmix:nolive, mix:created, mix:lastModified
+[releasent:release] > nt:base, jmix:nolive, mix:created, mix:lastModified
  - name (string) mandatory primary
 
