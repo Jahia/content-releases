@@ -114,9 +114,6 @@
                         </goals>
                         <configuration>
                             <arguments>${yarn.arguments}</arguments>
-                            <environmentVariables>
-                                <NODE_OPTIONS>--openssl-legacy-provider</NODE_OPTIONS>
-                            </environmentVariables>
                         </configuration>
                     </execution>
                 </executions>

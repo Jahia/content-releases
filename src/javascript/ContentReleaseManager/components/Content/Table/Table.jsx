@@ -6,7 +6,6 @@ import {useTranslation} from 'react-i18next';
 import {withStyles} from '@material-ui/core';
 import {StoreContext} from '../../../contexts';
 import MenuAction from './Cells/MenuAction';
-import ReleaseName from './Cells/ReleaseName';
 
 const columnsWidth = {
     actions: '120px',
@@ -33,8 +32,7 @@ const TableCmp = props => {
         {
             key: 'name',
             label: t('label.layout.content.table.header.name'),
-            ...stringColumn(row => row.name),
-            render: (value, row) => <ReleaseName release={row}/>
+            ...stringColumn(row => row.name)
         },
         {
             key: 'items',
@@ -61,7 +59,7 @@ const TableCmp = props => {
                 enablePagination
                 data={releases}
                 columns={columns}
-                primaryKey="name"
+                primaryKey="id"
                 defaultSortBy="name"
                 defaultSortDirection="descending"
                 defaultCurrentPage={1}

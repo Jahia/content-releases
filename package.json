@@ -31,7 +31,6 @@
         "@jahia/design-system-kit": "1.1.8",
         "@jahia/icons": "1.1.1",
         "@jahia/moonstone": "^2.19.0",
-        "@jahia/moonstone-alpha": "^1.0.0",
         "@jahia/react-material": "3.0.2",
         "@jahia/ui-extender": "^1.0.0",
         "@material-ui/core": "^3.9.3",
@@ -46,7 +45,6 @@
         "mdi-material-ui": "^5.31.0",
         "prop-types": "^15.6.2",
         "react": "^16.13.1",
-        "react-aria": "3.48.0",
         "react-dom": "^16.13.1",
         "react-i18next": "^11.7.3",
         "react-table": "^7.7.0"
