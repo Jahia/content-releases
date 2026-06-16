@@ -1,14 +1,16 @@
 import {gql} from 'apollo-boost';
-// Import {PredefinedFragments} from '@jahia/data-helper';
+import {PredefinedFragments} from '@jahia/data-helper';
 
 export const GET_RELEASES = gql`
     query getReleaseFolder($workspace: Workspace!, $path: String!,$language: String!) {
         response: jcr(workspace: $workspace) {
             releases: nodeByPath(path: $path) {
                 id: uuid
+                ...NodeCacheRequiredFields
                 children{
                     nodes {
                         id: uuid
+                        ...NodeCacheRequiredFields
                         path
                         type: primaryNodeType{
                             value:name
@@ -20,6 +22,7 @@ export const GET_RELEASES = gql`
                             nodes{
                                 node{
                                     id: uuid
+                                    ...NodeCacheRequiredFields
                                     path
                                     type: primaryNodeType{
                                         value:name
@@ -28,6 +31,7 @@ export const GET_RELEASES = gql`
                                     releases: property(name:"releases"){
                                         release : refNodes{
                                             id:uuid
+                                            ...NodeCacheRequiredFields
                                         }
                                     }
                                 }
@@ -38,7 +42,6 @@ export const GET_RELEASES = gql`
             }
         }
     }
+    ${PredefinedFragments.nodeCacheRequiredFields.gql}
 `;
-//    ${PredefinedFragments.nodeCacheRequiredFields.gql}
 // ${propsFragment}
-
