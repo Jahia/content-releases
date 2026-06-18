@@ -1,26 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DataTable} from '@jahia/moonstone';
-import {TableCellActions, stringColumn} from '@jahia/moonstone/DataTable';
+import {Button, DataTable, Search} from '@jahia/moonstone';
+import {TableCellActions, TableRow, stringColumn, numberColumn} from '@jahia/moonstone/DataTable';
 import {useTranslation} from 'react-i18next';
-import {withStyles} from '@material-ui/core';
+import clsx from 'clsx';
+import styles from './table.module.scss';
 import {StoreContext} from '../../../contexts';
 import MenuAction from './Cells/MenuAction';
 
-const columnsWidth = {
-    actions: '120px',
-    items: '200px'
+const handleClick = release => {
+    const {urlbase, siteKey, lang} = window.contextJsParameters;
+    const searchType = 'releasemix:releaseItem';
+    const query = `params=(searchPath:/sites/${siteKey},sql2SearchFrom:'${searchType}',sql2SearchWhere:'releases+=!'${release.id}!'')`;
+    const url = `${urlbase}/jcontent/${siteKey}/${lang}/sql2Search/sites/${siteKey}/home?${query}`;
+    window.open(url, '_blank');
 };
-
-const styles = () => ({
-    subContainer: {
-        flex: '1 1 auto',
-        width: '100%',
-        display: 'flex',
-        minWidth: 0,
-        flexDirection: 'column'
-    }
-});
 
 const TableCmp = props => {
     const {classes} = props;
@@ -37,36 +31,45 @@ const TableCmp = props => {
         {
             key: 'items',
             label: t('label.layout.content.table.header.items'),
+            ...numberColumn(row => row.items?.length || 0),
             isSortable: true,
-            width: columnsWidth.items,
-            render: value => value.length
-        },
-        {
-            key: 'actions',
-            label: t('label.layout.content.table.header.actions'),
-            isSortable: false,
-            width: columnsWidth.actions,
-            render: (value, row) => (
-                <TableCellActions actions={<MenuAction release={row}/>}/>
-            )
+            align: 'right'
         }
     ], [t]);
 
     return (
-        <div className={classes.subContainer}>
-            <DataTable
-                enableSorting
-                enablePagination
-                data={releases}
-                columns={columns}
-                primaryKey="id"
-                defaultSortBy="name"
-                defaultSortDirection="descending"
-                defaultCurrentPage={1}
-                defaultItemsPerPage={25}
-                rowProps={{'data-cm-role': 'table-content-list-row'}}
-            />
-        </div>
+        <DataTable
+            enableSorting
+            enablePagination
+            className={clsx('flexFluid', styles.table, classes)}
+            data={releases}
+            columns={columns}
+            primaryKey="id"
+            defaultSortBy="name"
+            defaultItemsPerPage={25}
+            renderRow={({id, data, render}) => (
+                <TableRow
+                    key={id}
+                    data-cm-role="table-content-list-row"
+                    className={clsx(data.items?.length === 0 && styles.disabled)}
+                >
+                    {render({
+                        after: (
+                            <TableCellActions
+                                actions={
+                                    <>
+                                        {data.items?.length > 0 && (
+                                            <Button variant="ghost" icon={<Search/>} onClick={() => handleClick(data)}/>
+                                        )}
+                                        <MenuAction release={data}/>
+                                    </>
+                                }
+                            />
+                        )
+                    })}
+                </TableRow>
+            )}
+        />
     );
 };
 
@@ -75,4 +78,4 @@ TableCmp.propTypes = {
 };
 
 TableCmp.displayName = 'Content';
-export default withStyles(styles)(TableCmp);
+export default TableCmp;

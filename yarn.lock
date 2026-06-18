@@ -1111,7 +1111,7 @@
   dependencies:
     "@floating-ui/dom" "^1.7.6"
 
-"@floating-ui/react@^0.27.16":
+"@floating-ui/react@^0.27.19":
   version "0.27.19"
   resolved "https://registry.yarnpkg.com/@floating-ui/react/-/react-0.27.19.tgz#d8d5d895b7cb97dac370bfbf55f3e630878fdf1f"
   integrity sha512-31B8h5mm8YxotlE7/AU/PhNAl8eWxAmjL/v2QOxroDNkTFLk3Uu82u63N3b6TXa4EGJeeZLVcd/9AlNlVqzeog==
@@ -1202,12 +1202,12 @@
     mdi-material-ui "^5.10.0"
     recompose "^0.30.0"
 
-"@jahia/moonstone@^2.19.0":
-  version "2.19.0"
-  resolved "https://npm.jahia.com/@jahia/moonstone/-/moonstone-2.19.0.tgz#fee008dd7fb01241998c73bf828e6cf933a18d99"
-  integrity sha512-iAGCK8gJzhJ9sYRkyhT825LHkJaGPc2XPpmzRm/eupva1k/N5M1CGKtwI5bb86e72ZZ9CyJ3+RbBbkkjMbNgYA==
+"@jahia/moonstone@^2.20.2":
+  version "2.20.2"
+  resolved "https://npm.jahia.com/@jahia/moonstone/-/moonstone-2.20.2.tgz#06892ad6b246cfb48bd01c433d3ccacd7ee07809"
+  integrity sha512-dCo+bJk4saDdBavdesGTzpLCdEZ351NQckatch3Jq5ofSZ+KQb3z1+H/1K561Zx9zIZXHqEwUoMoVkG7nDP8bg==
   dependencies:
-    "@floating-ui/react" "^0.27.16"
+    "@floating-ui/react" "^0.27.19"
     "@tanstack/react-table" "^8.21.3"
     clsx "^2.1.1"
     re-resizable "^6.11.2"
@@ -1460,6 +1460,9 @@
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-3.0.2.tgz#d67a6dd1ec8312d3a88ec97944a63daeef24fe10"
   integrity sha512-QY/3gJnObZQ3O/e6WjH+0ah2M3MOgLOzCy8HTUoUx9B6dDrS18vP7Ycw3qrDEKlB6q1KNxy6CZHm5FCauWGy2g==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    recompose "0.28.0 - 0.30.0"
 
 "@material-ui/system@^3.0.0-alpha.0":
   version "3.0.0-alpha.2"
@@ -5957,7 +5960,7 @@ parse-json@^5.0.0:
 parse-unit@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parse-unit/-/parse-unit-1.0.1.tgz#7e1bb6d5bef3874c28e392526a2541170291eecf"
-  integrity sha1-fhu21b7zh0wo45JSaiVBFwKR7s8=
+  integrity sha512-hrqldJHokR3Qj88EIlV/kAyAi/G5R2+R56TBANxNMy0uPlYcttx0jnMW6Yx5KsKPSbC3KddM/7qQm3+0wEXKxg==
 
 parse5-htmlparser2-tree-adapter@^6.0.1:
   version "6.0.1"
