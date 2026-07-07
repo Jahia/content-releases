@@ -2,34 +2,10 @@ import React from 'react';
 import {StoreContext} from '../../contexts';
 import Table from './Table';
 import Help from './Help';
-import classnames from 'clsx';
-import {withStyles} from '@material-ui/core';
+import clsx from 'clsx';
+import {LayoutContent, Paper} from '@jahia/moonstone';
+import styles from './content.module.scss';
 import PropTypes from 'prop-types';
-
-const styles = () => ({
-    root: {
-        flex: '1 1 0',
-        width: '100%',
-        minHeight: 0,
-        padding: 'var(--spacing-medium)'
-    },
-    main: {
-        flex: '1 1 0%',
-        width: '100%',
-        display: 'flex',
-        position: 'relative',
-        overflow: 'hidden',
-        minHeight: 0,
-        flexDirection: 'row',
-        backgroundColor: '#ffffff'
-    },
-    container: {
-        flex: '1 2 0%',
-        order: 2,
-        display: 'flex',
-        minWidth: 0
-    }
-});
 
 const ContentCmp = ({classes}) => {
     const {state} = React.useContext(StoreContext);
@@ -46,23 +22,17 @@ const ContentCmp = ({classes}) => {
     };
 
     return (
-        <div className={classnames(
-            classes.root,
-            'flexCol'
-        )}
-        >
-            <div className={classes.main}>
-                <div className={classes.container}>
-                    {getDisplay()}
-                </div>
-            </div>
-        </div>
+        <LayoutContent className={clsx(classes)}>
+            <Paper hasPadding={false} className={clsx('flexCol_nowrap flexFluid', styles.paper)}>
+                {getDisplay()}
+            </Paper>
+        </LayoutContent>
     );
 };
 
 ContentCmp.displayName = 'Content';
 ContentCmp.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object
 };
 
-export default withStyles(styles)(ContentCmp);
+export default ContentCmp;
